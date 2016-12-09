@@ -3,33 +3,22 @@
 use Roots\Sage\Assets;
 
 ?>
-<section class="challenge-approach-impact">
+<section class="story">
   <div class="slanted-photos">
-    <div class="challenge">
-      <img class="background" src="<?php echo Assets\asset_path('images/warehouse.jpg'); ?>" />
+    <div class="mission">
+      <img class="background" src="<?php echo Assets\asset_path('images/banner.jpg'); ?>" />
       <div class="wrap-content">
-        <div class="h2">
-          <span class="skew">The Challenge</span>
-        </div>
-        <div class="hover">
-          <div class="shape"></div>
-          <ul>
-            <li><img src="<?php echo Assets\asset_path('images/people.svg'); ?>" /><strong>1 in 6 adults</strong> and <strong>1 in 4 children</strong> live in poverty in North Carolina.</li>
-            <li><img src="<?php echo Assets\asset_path('images/loans.svg'); ?>" /><strong>Little investment</strong> in communities and loans are <strong>difficult to obtain</strong>.</li>
-            <li><img src="<?php echo Assets\asset_path('images/unemployment.svg'); ?>" /><strong>High unemployment rate</strong> in rural NC and many communities have <strong>no voice in Raleigh</strong>.</li>
-          </ul>
-        </div>
         <div class="solid-notch">
-          Too many communities have been left behind in North Carolina. <strong>We must address these challenges.</strong>
+          Ensuring that every North Carolinian has a home in which to live with <strong>dignity</strong> and <strong>opportunity</strong>.
         </div>
       </div>
     </div>
 
-    <div class="approach">
-      <img class="background" src="<?php echo Assets\asset_path('images/puzzle.jpg'); ?>" />
+    <div class="spotlight">
+      <img class="background" src="<?php echo Assets\asset_path('images/member-spotlight.jpg'); ?>" />
       <div class="wrap-content">
         <div class="h2">
-          <span class="skew">Our Approach</span>
+          <span class="skew">Member Spotlight</span>
         </div>
         <div class="hover">
           <ul>
@@ -39,7 +28,7 @@ use Roots\Sage\Assets;
           </ul>
         </div>
         <div class="solid-notch">
-          We work with our partners across the state to <strong>transform their communities</strong> and <strong>increase access to opportunity</strong> for all North Carolinians.
+          <strong>The Woda Group:</strong> <em>Going above and beyond</em>
         </div>
       </div>
     </div>

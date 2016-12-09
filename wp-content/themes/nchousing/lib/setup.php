@@ -83,7 +83,7 @@ function assets() {
 add_action('wp_enqueue_scripts', __NAMESPACE__ . '\\assets', 100);
 
 function google_fonts() {
-  echo '<link href="//fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic,700|Raleway:400,800" rel="stylesheet" type="text/css">';
+  echo '<link href="//fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i" rel="stylesheet" type="text/css">';
 }
 add_action('wp_head', __NAMESPACE__ . '\\google_fonts');
 add_action('embed_head', __NAMESPACE__ . '\\google_fonts');

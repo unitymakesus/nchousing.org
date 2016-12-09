@@ -126,7 +126,7 @@
 }
 
 .article-intro-text {
-  background: $yellow-lightest;
+  background: $gold-lightest;
   margin-bottom: 2em;
   padding: 1.88em 1.88em 1px;
   font-size: 20px;
@@ -162,7 +162,7 @@
   }
 
   &.theme-dark {
-    background: $teal;
+    background: $blue;
     color: $white;
 
     h2, h3, h4, h5, h6 {
@@ -170,7 +170,7 @@
     }
 
     a {
-      color: $teal-lightest;
+      color: $blue-lightest;
 
       &:hover, &:focus, &:active {
         color: $white;
@@ -209,7 +209,7 @@
     z-index: 5;
     padding-top: 3em;
     padding-bottom: 3em;
-    font-family: $font-family-serif;
+    font-family: $font-family-sans-serif;
     font-size: $font-size-h4;
     line-height: 1.88em;
 
@@ -268,7 +268,7 @@
   .floating-text {
     position: absolute;
     z-index: 5;
-    font-family: $font-family-serif;
+    font-family: $font-family-sans-serif;
     font-size: $font-size-h1;
     color: $white;
     text-align: center;
@@ -306,7 +306,7 @@
   margin: 0 0 0 3px;
   width: 15px;
   height: 16px;
-  background: $teal-lighter;
+  background: $blue-lighter;
 }
 
 .single-edtalk {

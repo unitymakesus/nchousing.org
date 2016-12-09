@@ -1,3 +1,65 @@
+.story {
+  margin-bottom: 4em;
+
+  .gradient-bg {
+    @include gold-blue-gradient-bottom;
+    padding-top: 4em;
+  }
+
+  .h2 {
+    margin: 0 0 10px;
+    color: $blue;
+    position: relative;
+    z-index: 5;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  .skew {
+    padding: 10px 20px;
+
+    &:before {
+      background: $gold-lighter;
+    }
+  }
+}
+
+.solid-notch {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  transform: translate3d(-50%, -50%, 0);
+  padding: 15px 0 15px 15px;
+  background: $gold-lighter;
+  color: $blue;
+  font-size: 28px;
+  line-height: 1.55em;
+  box-shadow: $gray-dark 0 0 30px;
+
+  strong {
+    font-weight: 800;
+    font-style: italic;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    right: -20px;
+    top: 0;
+    height: 100%;
+    border-style: solid;
+    border-color: transparent transparent transparent $gold-lighter;
+    border-width: 37.5px 0 0 21.8px;
+  }
+
+  @media (min-width: $screen-md-min) {
+    left: 15px;
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
 .slanted-photos {
   position: relative;
   width: 100%;
@@ -7,14 +69,13 @@
     height: 375px;
   }
 
-  .challenge, .approach {
+  .mission, .spotlight {
     position: relative;
     height: 375px;
     overflow: hidden;
 
     @media (min-width: $screen-md-min) {
       height: 100%;
-      width: 70%;
       position: absolute;
       transform: skewX(30deg);
     }
@@ -61,7 +122,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: $teal-lightest-50;
+      // background: $teal-lightest-50;
       z-index: 1;
       transform: translate3d(100%, 0, 0);
       transition: transform .45s ease;
@@ -137,7 +198,8 @@
     }
   }
 
-  .challenge {
+  .mission {
+    width: 85%;
     .hover {
       li {
         clear: left;
@@ -150,7 +212,7 @@
 
       .wrap-content {
         left: 110px;
-        width: calc(30vw + 218px);
+        width: calc(50vw + 218px);
       }
 
       .shape {
@@ -163,10 +225,11 @@
   }
 
   @media (min-width: $screen-md-min) {
-    .approach {
+    .spotlight {
       border-left: 7px solid $white;
       right: -110px;
       z-index: 1;
+      width: 40%;
 
       .background, .wrap-content {
         left: -110px;
@@ -206,65 +269,6 @@
   }
 }
 
-.solid-notch {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 70%;
-  transform: translate3d(-50%, -50%, 0);
-  padding: 15px 0 15px 15px;
-  background: $teal-lightest;
-  font-size: 18px;
-  line-height: 1.55em;
-  box-shadow: $gray-dark 0 0 30px;
-
-  strong {
-    font-size: 1.3em;
-    font-family: $font-family-sans-serif;
-    font-weight: 800;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    right: -20px;
-    top: 0;
-    height: 100%;
-    border-style: solid;
-    border-color: transparent transparent transparent $teal-lightest;
-    border-width: 37.5px 0 0 21.8px;
-  }
-
-  @media (min-width: $screen-md-min) {
-    left: 15px;
-    transform: translate3d(0, -50%, 0);
-  }
-}
-
-.challenge-approach-impact {
-  margin-bottom: 4em;
-
-  .gradient-bg {
-    @include teal-yellow-gradient-bottom;
-    padding-top: 4em;
-  }
-
-  .h2 {
-    margin: 0 0 10px;
-    color: $white;
-    position: relative;
-    z-index: 5;
-  }
-
-  .skew {
-    padding: 10px 20px;
-
-    &:before {
-      background: $teal;
-    }
-  }
-}
-
 .impact-blocks {
   margin-bottom: 2em;
 
@@ -294,7 +298,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    @include teal-lightest-slant;
+    // @include teal-lightest-slant;
     background-size: 230% 100%;
     background-position: 0 0;
     border-radius: 50%;
@@ -351,71 +355,6 @@
 
     a {
       font-color: $gray-lighter !important;
-    }
-  }
-}
-
-.data-banner {
-  @include teal-yellow-gradient-right;
-  position: relative;
-  padding: 30px;
-  margin-bottom: 3em;
-  height: 270px;
-  color: $teal;
-  background-size: 150% 100%;
-  background-position: 50% 0;
-  transition: background-position .4s ease;
-  overflow: hidden;
-
-  .title-top, .title-bottom {
-    transform-origin: top left;
-    transform: scale3d(1.05, 1.05, 1);
-    transition: transform .3s ease;
-    position: relative;
-    z-index: 2;
-  }
-
-  .title-top {
-    font-size: 3em;
-  }
-
-  .title-bottom {
-    font-family: $font-family-sans-serif;
-    font-weight: 800;
-    font-size: 3.5em;
-  }
-
-  .data-bars {
-    position: absolute;
-    right: 10%;
-    top: 20px;
-    height: 100%;
-    z-index: 1;
-  }
-
-  &:after {
-    content: '';
-    pointer-events: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: $teal-lightest-50;
-    z-index: 1;
-    transform: skewX(30deg) translate3d(130%, 0, 0);
-    transition: transform .45s ease;
-  }
-
-  &:hover {
-    background-position: 100% 0;
-
-    .title-top, .title-bottom {
-      transform: scale3d(1, 1, 1);
-    }
-
-    &:after {
-      transform: skewX(30deg) translate3d(-130%, 0, 0);
     }
   }
 }

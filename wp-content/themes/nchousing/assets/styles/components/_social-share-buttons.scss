@@ -6,7 +6,7 @@
     right: 0;
     bottom: 0;
     z-index: 100;
-    background: $teal-lighter;
+    background: $teal;
     text-decoration: none;
     color: $white;
 
@@ -160,10 +160,10 @@
   }
 
   &.icon-email {
-    background: $teal-light;
+    background: $teal;
 
     &:hover {
-      background: darken($teal-light, 10%);
+      background: darken($teal, 10%);
     }
   }
 }
@@ -171,18 +171,18 @@
   @extend .social-share-link;
 
   &.icon-download {
-    background: $rust-light;
+    background: lighten($rust, 10%);
 
     &:hover {
-      background: darken($rust-light, 10%);
+      background: $rust;
     }
   }
 
   &.icon-fax {
-    background: $brown-lighter;
+    background: lighten($red, 10%);
 
     &:hover {
-      background: darken($brown-lighter, 10%);
+      background: $red;
     }
   }
 }

@@ -5,7 +5,7 @@
   @include make-lg-column(3);
 
   .entry-header {
-    background-color: $yellow-lightest;
+    background-color: $gold-lightest;
     color: $gray-dark;
     width: 100%;
     padding: 10px;
@@ -18,16 +18,16 @@
 
     .meta {
       display: block;
-      color: $brown;
+      color: $rust;
       font-size: .8em;
-      font-family: $font-family-serif;
+      font-family: $font-family-sans-serif;
       font-weight: bold;
     }
   }
 
   &:hover {
     .entry-header {
-      background-color: $brown-lightest;
+      background-color: lighten($rust, 10%);
       transform: scale(1.025);
 
       @media (min-width: $screen-sm-min) {

@@ -38,6 +38,6 @@
     }
   },
   "config": {
-    "devUrl": "http://hhvm.hgv.test"
+    "devUrl": "http://nchousing.dev"
   }
 }

@@ -1,5 +1,5 @@
 .btn.btn {
-  background: $teal-light;
+  // background: $teal-light;
   font-family: $font-family-sans-serif;
   border-radius: 0;
   color: $white;
@@ -36,7 +36,7 @@
   font-size: 18px;
 
   &:before {
-    @include tomato-right;
+    // @include tomato-right;
     background-size: 200% 100%;
     background-position: 0 0;
     transition: background-position .4s ease;
@@ -52,7 +52,7 @@
 }
 
 .btn.btn-teal:before {
-  @include teal-dark-right;
+  // @include teal-dark-right;
 }
 
 .donately-submit {

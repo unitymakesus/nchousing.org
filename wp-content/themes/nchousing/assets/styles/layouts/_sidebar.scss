@@ -21,14 +21,14 @@
         padding: 7px 0;
 
         &:hover, &:active, &:focus {
-          color: $teal;
+          color: $blue;
           text-decoration: underline;
           background: none;
         }
       }
 
       &.active > a {
-        color: $teal;
+        color: $blue;
       }
     }
 
@@ -38,7 +38,7 @@
   }
 
   h4, .h4, .nav > .active.active > a {
-    background: $teal;
+    background: $blue;
     color: $white;
     font-size: $font-size-h4;
     text-decoration: none;
@@ -56,12 +56,12 @@
       top: 0;
       height: 100%;
       border-style: solid;
-      border-color: transparent transparent transparent $teal;
+      border-color: transparent transparent transparent $blue;
       border-width: 19px 0 0 11px;
     }
 
     &:hover {
-      background: $teal;
+      background: $blue;
     }
   }
 
@@ -72,7 +72,7 @@
 }
 
 .well {
-  background: $teal-lightest;
+  background: $blue-lightest;
   border: none;
   border-radius: 0;
   position: relative;
@@ -86,7 +86,7 @@
     top: 0;
     height: 100%;
     border-style: solid;
-    border-color: transparent transparent transparent $teal-lightest;
+    border-color: transparent transparent transparent $blue-lightest;
     border-width: 37.5px 0 0 21.8px;
   }
 }

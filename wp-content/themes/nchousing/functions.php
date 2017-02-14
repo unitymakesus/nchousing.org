@@ -10,6 +10,7 @@
  * @link https://github.com/roots/sage/pull/1042
  */
 $sage_includes = [
+  'lib/acf-fields.php',
   'lib/assets.php',    // Scripts and stylesheets
   'lib/cmb-fields.php', // Custom Meta Box fields
   'lib/custom-post-types.php', // Custom post types

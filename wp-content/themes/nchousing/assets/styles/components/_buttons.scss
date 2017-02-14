@@ -1,5 +1,5 @@
 .btn.btn {
-  // background: $teal-light;
+  background: $gold;
   font-family: $font-family-sans-serif;
   border-radius: 0;
   color: $white;
@@ -17,12 +17,14 @@
     }
 
     & > a, a:hover, a:focus, a:active {
-      color: $white;
+      color: $white !important;
+      padding: 10px 15px;
+      border: none;
     }
   }
 
   &:hover {
-    background: $teal;
+    background: darken($gold, 5%);
   }
 
   &:focus {
@@ -36,7 +38,7 @@
   font-size: 18px;
 
   &:before {
-    // @include tomato-right;
+    @include rust-right;
     background-size: 200% 100%;
     background-position: 0 0;
     transition: background-position .4s ease;
@@ -51,8 +53,14 @@
   }
 }
 
-.btn.btn-teal:before {
-  // @include teal-dark-right;
+.btn.btn-lg {
+  font-size: 1.25em;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.btn.btn-gold:before {
+  @include gold-dark-right;
 }
 
 .donately-submit {

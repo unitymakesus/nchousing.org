@@ -33,7 +33,7 @@
     }
 
     &:after {
-      @include trans-teal-dark-slant;
+      @include trans-blue-dark-slant;
       transform: scale3d(1.5, 1.5, 1);
       right: -50%;
       opacity: .75;

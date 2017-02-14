@@ -1,21 +1,19 @@
+.sponsors {
+  margin-bottom: 2em;
+
+  img {
+    display: inline-block;
+    margin: 0 20px 15px;
+  }
+}
+
 .global-footer {
-  background: $blue-lighter;
-
-  .striped-line {
-    height: 40px;
-  }
-
-  .h4 {
-    font-weight: 800;
-    font-size: 20px;
-  }
+  background: $blue;
+  color: $white;
+  font-size: 18px;
 
   a {
-    color: $gray-dark;
-
-    &.btn {
-      vertical-align: 2px;
-    }
+    color: $white;
 
     &[class^='icon-'] {
       text-decoration: none;
@@ -26,10 +24,49 @@
 
     &:hover {
       color: darken($teal, 10%);
+    }
+  }
+
+  .container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  .btn {
+    margin-left: 14px;
+  }
+
+  .navbar-nav {
+    li {
+      display: block;
+      float: none;
 
       &.btn {
-        color: $white;
+        display: none;
+      }
+
+      a {
+        text-decoration: none;
+        text-transform: uppercase;
+
+        br {
+          display: none;
+        }
       }
     }
+  }
+}
+
+.below-footer {
+  background: $white;
+  color: $text-color;
+
+  .container {
+    padding-top: 15px;
+    padding-bottom: 10px;
+  }
+
+  a {
+    color: $text-color;
   }
 }

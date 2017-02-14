@@ -8,12 +8,13 @@
  * and memory information and return of conditional tags only for admins; for debug, information or learning purposes.
  * Setting output in the settings of the plugin and use output via link in Admin Bar, via setting, via url-param
  * '<code>debug</code>' or set a cookie via url param '<code>debugcookie</code>' in days.
- * Version:     2.3.1
+ * Version:     2.4.0
  * License:     GPL-3+
  * Author:      Frank Bültge
  * Author URI:  http://bueltge.de/
  *
- * @version 2016-03-31
+ * @version 2017-01-17
+ * @package Debug_Objects
  */
 
 // avoid direct calls to this file, because now WP core and framework has been used.
@@ -24,13 +25,9 @@ if ( ! function_exists( 'add_filter' ) ) {
 
 if ( ! class_exists( 'Debug_Objects' ) ) {
 
-	// include plugin on hook
+	// Include plugin on hook.
 	add_action( 'plugins_loaded', array( 'Debug_Objects', 'get_object' ) );
 	register_activation_hook( __FILE__, array( 'Debug_Objects', 'on_activation' ) );
-
-	// include the ChromePHP very early
-	require_once dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'inc/class-chromephp.php';
-	$debug_objects_chromephp = Debug_Objects_Chromephp::init();
 
 	/**
 	 * Class Debug_Objects
@@ -43,7 +40,7 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		 * @since  0.0.1
 		 * @var    String
 		 */
-		protected static $classobj = NULL;
+		protected static $classobj;
 
 		/**
 		 * Define folder, there have inside the autoload files
@@ -53,26 +50,30 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		 */
 		static protected $file_base = '';
 
-		// table for page hooks
+		// Table for page hooks.
 		public static $table = 'hook_list';
 
-		// var for tab array
+		// Var for tab array.
 		public static $tabs = array();
 
-		// string vor save in DB
+		// String vor save in DB.
 		public static $option_string = 'debug_objects';
 
-		// plugin basename
+		// Plugin basename.
 		public static $plugin;
 
-		// included classes on default; without user settings
+		// Included classes on default; without user settings.
 		public static $by_settings = array( 'Wrap' );
 
-		// exclude class for central include
+		// Exclude class for central include
 		public static $exclude_class = array( 'Backend', 'Frontend', 'Stack_Trace' );
 
 		// store classes from settings
 		public $store_classes = array();
+
+		// Store debug data.
+		protected static $data;
+		protected static $desc;
 
 		/**
 		 * Handler for the action 'init'. Instantiates this class.
@@ -92,7 +93,6 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		 * Init other methods via hook; install settings and capabilities
 		 *
 		 * @since   2.0.0
-		 * @return \Debug_Objects
 		 */
 		public function __construct() {
 
@@ -103,7 +103,7 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 			self::$plugin = plugin_basename( __FILE__ );
 
 			if ( is_multisite() && ! function_exists( 'is_plugin_active_for_network' ) ) {
-				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+				require_once ABSPATH . '/wp-admin/includes/plugin.php';
 			}
 
 			// add and remove settings, the table for the plugin
@@ -111,20 +111,20 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 			register_uninstall_hook( __FILE__, array( 'Debug_Objects', 'on_uninstall' ) );
 
 			// define folder for autoload, settings was load via settings and init_classes()
-			self::$file_base = dirname( __FILE__ ) . '/inc/autoload';
+			self::$file_base = __DIR__ . '/inc/autoload';
 
-			// Load 5.4 improvements 
+			// Load 5.4 improvements
 			if ( version_compare( phpversion(), '5.4.0', '>=' ) ) {
-				require_once( dirname( __FILE__ ) . '/inc/class-php-54-improvements.php' );
+				require_once __DIR__ . '/inc/class-php-54-improvements.php';
 			}
 
-			// load all files form autoload folder
+			// Load all files from autoload directory.
 			self::load();
 
 			// add custom capability
 			add_action( 'admin_init', array( $this, 'add_capabilities' ) );
 
-			self::init_classes();
+			$this->init_classes();
 		}
 
 		/**
@@ -153,7 +153,7 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		 */
 		public function add_capabilities() {
 
-			/** @var $wp_roles WP_Role */
+			/** @var $wp_roles \WP_Role */
 			global $wp_roles;
 			$wp_roles->add_cap( 'administrator', '_debug_objects' );
 		}
@@ -173,13 +173,22 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 				$options = (array) get_option( self::$option_string );
 			}
 
-			if ( ( isset( $options[ 'frontend' ] ) && '1' === $options[ 'frontend' ] ) || ( isset( $options[ 'backend' ] ) && '1' === $options[ 'backend' ] ) ) {
-				$view = TRUE;
-			} else {
-				$view = FALSE;
+			if ( ! isset( $options[ 'frontend' ] ) ) {
+				$options[ 'frontend' ] = 0;
+			}
+			if ( ! isset( $options[ 'backend' ] ) ) {
+				$options[ 'backend' ] = 0;
+			}
+			if ( ! isset( $options[ 'stack_trace' ] ) ) {
+				$options[ 'stack_trace' ] = 0;
 			}
 
-			if ( isset( $options[ 'stack_trace' ] ) && '1' === $options[ 'stack_trace' ] ) {
+			$view = FALSE;
+			if ( 1 === (int) $options[ 'frontend' ] || 1 === (int) $options[ 'backend' ] ) {
+				$view = TRUE;
+			}
+
+			if ( 1 === (int) $options[ 'stack_trace' ] ) {
 				define( 'STACKTRACE', TRUE );
 			}
 
@@ -193,42 +202,48 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 
 			if ( ! empty( $options ) ) {
 				foreach ( $options as $class => $check ) {
-					if ( '1' === $check ) {
+					if ( 1 === (int) $check ) {
 						self:: $by_settings[ ] = ucwords( $class );
 					}
 				}
 			}
-			$classes = $this->store_classes = apply_filters( 'debug_objects_classes', self::$by_settings );
 
-			self::set_cookie_control();
+			$classes = (array) $this->store_classes = apply_filters(
+				'debug_objects_classes', self::$by_settings
+			);
+
+			$this->set_cookie_control();
 
 			// Load class backtrace without output, if option is active
-			if ( in_array( 'Rewrite_backtrace', $classes, FALSE ) ) {
+			if ( in_array( 'Rewrite_backtrace', $classes, TRUE ) ) {
 
-				$file = dirname( __FILE__ ) . DIRECTORY_SEPARATOR
-					. 'inc/class-rewrite_backtrace.php';
-				require_once( $file );
+				$file = __DIR__ . DIRECTORY_SEPARATOR . 'inc/class-rewrite_backtrace.php';
+				require_once $file;
 				add_action( 'init', array( 'Debug_Objects_Rewrite_Backtrace', 'init' ) );
 			}
 
-			if ( $view || self::debug_control() ) {
+			if ( $view || $this->debug_control() ) {
 				foreach ( $classes as $key => $require ) {
 					if ( ! class_exists( 'Debug_Objects_' . $require ) ) {
-						$file = dirname( __FILE__ ) . DIRECTORY_SEPARATOR
-							. 'inc/class-' . strtolower( $require ) . '.php';
+						$file = __DIR__ . DIRECTORY_SEPARATOR
+						        . 'inc/class-' . strtolower( $require ) . '.php';
 
 						if ( file_exists( $file ) ) {
 							/* @noinspection */
 							require_once $file;
 						}
 
-						add_action( 'plugins_loaded', array( 'Debug_Objects_' . $require, 'init' ), - 1 );
+						$class = 'Debug_Objects_' . $require;
+						new $class;
 					}
 				}
 			}
 
 		}
 
+		/**
+		 * @return array
+		 */
 		public function get_classes() {
 
 			return $this->store_classes;
@@ -243,15 +258,14 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		 */
 		public function debug_control() {
 
+			$debug = TRUE;
 			// Debug via _GET Param on URL
 			if ( ! isset( $_GET[ 'debug' ] ) ) {
 				$debug = FALSE;
-			} else {
-				$debug = TRUE;
 			}
 
 			if ( ! $debug ) {
-				$debug = self::get_cookie_control( $debug );
+				$debug = $this->get_cookie_control( $debug );
 			}
 
 			return (bool) $debug;
@@ -263,19 +277,14 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		 * @access  public
 		 * @since   2.0.1
 		 *
-		 * @param   $debug
+		 * @param   bool $debug
 		 *
 		 * @return  bool $debug
 		 */
-		public function get_cookie_control( $debug ) {
+		public function get_cookie_control( $debug = FALSE ) {
 
-
-			if ( ! isset( $_COOKIE[ self::get_plugin_data() . '_cookie' ] ) ) {
-				return FALSE;
-			}
-
-			$cookie = $_COOKIE[ self::get_plugin_data() . '_cookie' ];
-			if ( 'Debug_Objects_True' === $cookie ) {
+			if ( isset( $_COOKIE[ self::get_plugin_data() . '_cookie' ] ) &&
+			     'Debug_Objects_True' === $_COOKIE[ self::get_plugin_data() . '_cookie' ] ) {
 				$debug = TRUE;
 			}
 
@@ -296,17 +305,21 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 			}
 
 			if ( $_GET[ 'debugcookie' ] ) {
-				//$cookie_live = time() + 60 * 60 * 24 * (int) $_GET[ 'debugcookie' ]; // days
 				$cookie_live = new DateTime( 'now' );
 				$user_value = (int) $_GET[ 'debugcookie' ];
 				$cookie_live->add( new DateInterval( 'P' . $user_value . 'D' ) );
 				setcookie(
-					$this->get_plugin_data() . '_cookie', 'Debug_Objects_True', $cookie_live, COOKIEPATH, COOKIE_DOMAIN
+					static::get_plugin_data() . '_cookie',
+					'Debug_Objects_True',
+					$cookie_live, COOKIEPATH, COOKIE_DOMAIN
 				);
 			}
 
 			if ( 0 === (int) $_GET[ 'debugcookie' ] ) {
-				setcookie( $this->get_plugin_data() . '_cookie', '', time() - 3600, COOKIEPATH, COOKIE_DOMAIN );
+				setcookie(
+					static::get_plugin_data() . '_cookie',
+					'',
+					time() - 3600, COOKIEPATH, COOKIE_DOMAIN );
 			}
 		}
 
@@ -317,12 +330,13 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		 * @access  public
 		 *
 		 * @param   string $value default = 'TextDomain'
-		 *                        Name, PluginURI, Version, Description, Author, AuthorURI, TextDomain, DomainPath, Network, Title
-		 * @param   bool   $echo
+		 *                        Name, PluginURI, Version, Description, Author,
+		 *                        AuthorURI, TextDomain, DomainPath, Network, Title.
+		 * @param   bool   $echo  Set for print data.
 		 *
 		 * @return  string
 		 */
-		public function get_plugin_data( $value = 'TextDomain', $echo = FALSE ) {
+		public static function get_plugin_data( $value = 'TextDomain', $echo = FALSE ) {
 
 			static $plugin_data = array();
 
@@ -332,14 +346,14 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 			}
 
 			if ( ! function_exists( 'get_plugin_data' ) ) {
-				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
+				require_once ABSPATH . '/wp-admin/includes/plugin.php';
 			}
 
 			$plugin_data  = get_plugin_data( __FILE__ );
-			$plugin_value = empty ( $plugin_data[ $value ] ) ? '' : $plugin_data[ $value ];
+			$plugin_value = empty( $plugin_data[ $value ] ) ? '' : $plugin_data[ $value ];
 
 			if ( $echo ) {
-				echo $plugin_value;
+				echo esc_html( $plugin_value );
 			}
 
 			return $plugin_value;
@@ -365,12 +379,12 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		public static function on_activation() {
 
 			// Check for PHP Version
-			if ( ! version_compare( PHP_VERSION, '5.2.4', '>=' ) ) {
+			if ( ! version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {
 				deactivate_plugins( __FILE__ );
 				wp_die(
 					wp_sprintf(
-						'<strong>%s:</strong> ' . __( 'Sorry, This plugin requires PHP 5.2.4' ),
-						self:: get_plugin_data( 'Name' )
+						'<strong>%s:</strong> ' . esc_html__( 'Sorry, This plugin requires PHP 5.3.0' ),
+						esc_html( self::get_plugin_data( 'Name' ) )
 					)
 				);
 			}
@@ -432,16 +446,16 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		/**
 		 * Recursive search in array for string
 		 *
-		 * @param  String $needle
-		 * @param  Array  $haystack
+		 * @param  string $needle
+		 * @param  array  $haystack
 		 *
 		 * @return Boolean
 		 */
-		public function recursive_in_array( $needle, $haystack ) {
+		public static function recursive_in_array( $needle, $haystack ) {
 
 			if ( '' !== $haystack ) {
 				foreach ( $haystack as $stalk ) {
-					if ( $needle === $stalk || ( is_array( $stalk ) && $this->recursive_in_array( $needle, $stalk ) ) ) {
+					if ( $needle === $stalk || ( is_array( $stalk ) && static::recursive_in_array( $needle, $stalk ) ) ) {
 						return TRUE;
 					}
 				}
@@ -455,7 +469,7 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		/**
 		 *  Find the position of the first occurrence of a case-insensitive substring in a array
 		 *
-		 * @param  String $needle
+		 * @param  string $needle
 		 * @param  array  $haystack
 		 *
 		 * @return Boolean
@@ -471,7 +485,7 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 				if ( is_array( $value ) ) {
 					return $this->array_find( $needle, $value );
 
-				} else if ( FALSE !== stripos( $needle, $value ) ) {
+				} elseif ( FALSE !== stripos( $needle, $value ) ) {
 					return TRUE;
 				}
 			}
@@ -482,10 +496,10 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		/**
 		 * Return undefined list as tree
 		 *
-		 * @since        Version 2.0.0
-		 * @param        $arr
-		 * @param string $root_name
-		 * @param bool   $unserialized_string
+		 * @since 2.0.0
+		 * @param Object|array $arr
+		 * @param string       $root_name
+		 * @param bool         $unserialized_string
 		 *
 		 * @return string
 		 */
@@ -526,7 +540,7 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 				}
 			}
 
-			foreach ( $arr as $key => $val ) {
+			foreach ( (array) $arr as $key => $val ) {
 				$wp_object ++;
 
 				if ( is_numeric( $key ) ) {
@@ -582,7 +596,7 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 						$output .= "<li class=\"vt-$vt\"><span class=\"key\">" . htmlspecialchars( $key ) . '</span>';
 						$output .= "<br/><small><em>type</em>: $vt | <em>size</em>: " . strlen(
 								$val
-							) . " | <em>serialized</em>: " . ( is_serialized( $val ) !== FALSE ? 'TRUE'
+							) . ' | <em>serialized</em>: ' . ( is_serialized( $val ) !== FALSE ? 'TRUE'
 								: 'FALSE' ) . '</small><br/>';
 
 						if ( is_serialized( $val ) ) {
@@ -601,7 +615,7 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 
 						$output .= '</li>';
 						break;
-					default: //what the hell is this ?
+					default: // What the hell is this ?
 						$output .= '<li id="hook_' . $wp_object . '_' . $vt . '" class="vt-' . $vt . '"><span class="key">' . htmlspecialchars(
 								$key
 							) . '</span>';
@@ -636,52 +650,56 @@ if ( ! class_exists( 'Debug_Objects' ) ) {
 		public static function pre_print( $var, $before = '', $return = FALSE ) {
 
 			$export = var_export( $var, TRUE );
-			$escape = htmlspecialchars( $export, ENT_QUOTES, 'utf-8', FALSE );
+			$escape = esc_attr( $before ) . '<pre>'
+			          . htmlspecialchars( $export, ENT_QUOTES, 'utf-8', FALSE ) . '</pre>';
 
 			if ( ! $return ) {
-				print $before . '<pre>' . $escape . '</pre>';
+				print wp_kses( $escape, array( 'pre' => array() ) );
 			}
 
-			return $before . '<pre>' . $escape . '</pre>';
+			return $escape;
+		}
+
+		/**
+		 * Simple helper to debug to the console.
+		 *
+		 * @param mixed  $data
+		 *
+		 * @param string $description
+		 */
+		public static function debug_to_console( $data, $description = '' ) {
+
+			if ( defined('DOING_AJAX') && DOING_AJAX ) {
+				return;
+			}
+
+			if ( '' === $description ) {
+				$description = 'Debug in Console via Debug Objects Plugin:';
+			}
+
+			self::$data = $data;
+			self::$desc = $description;
+
+			if ( is_admin()  ) {
+				add_action( 'admin_footer', array( 'Debug_Objects', 'print_to_console' ) );
+			} else {
+				add_action( 'wp_footer', array( 'Debug_Objects', 'print_to_console' ) );
+			}
+		}
+
+		/**
+		 * Print debug and description data to the console of the browser.
+		 *
+		 * @since  2017-01-15
+		 */
+		public static function print_to_console() {
+			// Buffering to solve problems with WP core, header() etc.
+			ob_start();
+			$output  = 'console.info(' . wp_json_encode( self::$desc ) . ');';
+			$output .= 'console.log(' . wp_json_encode( self::$data ) . ');';
+			echo wp_kses( '<script>' . $output . '</script>', array( 'script' => array() ) );
 		}
 
 	} // end class
 
 } // end if class exists
-
-if ( ! function_exists( 'pre_print' ) ) {
-
-	/**
-	 * Print debug output
-	 *
-	 * @since     03/11/2012
-	 *
-	 * @param     mixed  $var
-	 * @param     string $before
-	 * @param     bool   $return
-	 *
-	 * @return    string
-	 */
-	function pre_print( $var, $before = '', $return = FALSE ) {
-
-		Debug_Objects::pre_print( $var, $before, $return );
-	}
-}
-
-if ( ! function_exists( 'debug_to_console' ) ) {
-	/**
-	 * Simple helper to debug to the console
-	 *
-	 * @param  object , array, string $data
-	 *
-	 * @return string
-	 */
-	function debug_to_console( $data ) {
-
-		$output = 'console.info( \'Debug in Console via Debug Objects Plugin:\' );';
-		$output .= 'console.log(' . json_encode( $data ) . ');';
-		$output = sprintf( '<script>%s</script>', $output );
-
-		echo $output;
-	}
-}

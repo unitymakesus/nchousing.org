@@ -54,7 +54,8 @@ $teal-lightest-50:      rgba(183, 216, 209, .5);
 $teal-lightest-75:      rgba(183, 216, 209, .75);
 
 $gold-10:               hsla(36,24,90,.1);
-$blue-light-60:         hsla(240,39,53,.6);
+$blue-75:               rgba(83, 83, 136, .75);
+$blue-35:               rgba(83, 83, 136, .35);
 
 // Set standards
 $brand-primary:         $blue;
@@ -91,11 +92,11 @@ $link-hover-color:      $blue-lighter;
 }
 
 @mixin gold-blue-gradient-bottom() {
-  @include filter-gradient($gold-10, $blue-light-60, vertical);
-  background-image: -o-linear-gradient(180deg, $gold-10 0%, $blue-light-60 100%);
-  background-image: -moz-linear-gradient(180deg, $gold-10 0%, $blue-light-60 100%);
-  background-image: -ms-linear-gradient(180deg, $gold-10 0%, $blue-light-60 100%);
-  background-image: linear-gradient(180deg, $gold-10 0%, $blue-light-60 100%);
+  @include filter-gradient($gold-lightest, #BBB8C7, vertical);
+  background-image: -o-linear-gradient(180deg, $gold-lightest 0%, #BBB8C7 100%);
+  background-image: -moz-linear-gradient(180deg, $gold-lightest 0%, #BBB8C7 100%);
+  background-image: -ms-linear-gradient(180deg, $gold-lightest 0%, #BBB8C7 100%);
+  background-image: linear-gradient(180deg, $gold-lightest 0%, #BBB8C7 100%);
 }
 
 // @mixin teal-yellow-gradient-bottom() {
@@ -122,6 +123,14 @@ $link-hover-color:      $blue-lighter;
 //   background-image: linear-gradient(60deg, $teal-lightest 50%, darken($teal-lightest, 5%) 50%);
 // }
 
+@mixin trans-blue-light-to-dark-slant() {
+  @include filter-gradient($blue-75, $blue, horizontal);
+  background-image: -o-linear-gradient(60deg, $blue-75 50%, $blue 50%);
+  background-image: -moz-linear-gradient(60deg, $blue-75 50%, $blue 50%);
+  background-image: -ms-linear-gradient(60deg, $blue-75 50%, $blue 50%);
+  background-image: linear-gradient(60deg, $blue-75 50%, $blue 50%);
+}
+
 @mixin trans-teal-light-to-dark-slant() {
   @include filter-gradient($teal-lightest-75, $teal, horizontal);
   background-image: -o-linear-gradient(60deg, $teal-lightest-75 50%, $teal 50%);
@@ -138,12 +147,36 @@ $link-hover-color:      $blue-lighter;
   background-image: linear-gradient(60deg, $teal-35 50%, $teal 50%);
 }
 
+@mixin trans-blue-dark-slant() {
+  @include filter-gradient($blue-35, $blue, horizontal);
+  background-image: -o-linear-gradient(60deg, $blue-35 50%, $blue 50%);
+  background-image: -moz-linear-gradient(60deg, $blue-35 50%, $blue 50%);
+  background-image: -ms-linear-gradient(60deg, $blue-35 50%, $blue 50%);
+  background-image: linear-gradient(60deg, $blue-35 50%, $blue 50%);
+}
+
 @mixin teal-dark-right() {
   @include filter-gradient($teal, darken($teal, 5%), horizontal);
   background-image: -o-linear-gradient(90deg, $teal 50%, darken($teal, 5%) 50%);
   background-image: -moz-linear-gradient(90deg, $teal 50%, darken($teal, 5%) 50%);
   background-image: -ms-linear-gradient(90deg, $teal 50%, darken($teal, 5%) 50%);
   background-image: linear-gradient(90deg, $teal 50%, darken($teal, 5%) 50%);
+}
+
+@mixin rust-right() {
+  @include filter-gradient($rust, $red, horizontal);
+  background-image: -o-linear-gradient(90deg, $rust 50%, $red 50%);
+  background-image: -moz-linear-gradient(90deg, $rust 50%, $red 50%);
+  background-image: -ms-linear-gradient(90deg, $rust 50%, $red 50%);
+  background-image: linear-gradient(90deg, $rust 50%, $red 50%);
+}
+
+@mixin gold-dark-right() {
+  @include filter-gradient($gold, darken($gold, 5%), horizontal);
+  background-image: -o-linear-gradient(90deg, $gold 50%, darken($gold, 5%) 50%);
+  background-image: -moz-linear-gradient(90deg, $gold 50%, darken($gold, 5%) 50%);
+  background-image: -ms-linear-gradient(90deg, $gold 50%, darken($gold, 5%) 50%);
+  background-image: linear-gradient(90deg, $gold 50%, darken($gold, 5%) 50%);
 }
 
 // Typography

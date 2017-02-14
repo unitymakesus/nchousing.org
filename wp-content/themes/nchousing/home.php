@@ -15,20 +15,17 @@ use Roots\Sage\Assets;
     </div>
 
     <div class="spotlight">
-      <img class="background" src="<?php echo Assets\asset_path('images/member-spotlight.jpg'); ?>" />
+      <?php
+      $spotlight = get_posts(['numberposts' => 1, 'cat_name' => 'member-spotlight']);
+      $background = get_the_post_thumbnail_url($spotlight[0]->ID, 'medium');
+      ?>
+      <a href="<?php echo get_the_permalink($spotlight[0]->ID); ?>"></a>
+      <img class="background" src="<?php echo $background ?>" />
       <div class="wrap-content">
-        <div class="h2">
+        <h2>
           <span class="skew">Member Spotlight</span>
-        </div>
-        <div class="hover">
-          <ul>
-            <li><img src="<?php echo Assets\asset_path('images/leadership.svg'); ?>" />Programs that nurture <strong>community-based leadership</strong> and stimulate <strong>social innovation</strong>.</li>
-            <li><img src="<?php echo Assets\asset_path('images/policy.svg'); ?>" /><strong>Advocating for better policy</strong> at both the statewide and local government levels.</li>
-            <li><img src="<?php echo Assets\asset_path('images/capital.svg'); ?>" />Providing access to the <strong>capital</strong> needed to finance the development of <strong>strong, vibrant and inclusive</strong> communities.</li>
-          </ul>
-        </div>
-        <div class="solid-notch">
-          <strong>The Woda Group:</strong> <em>Going above and beyond</em>
+        </h2>
+        <div class="spotlight-content"><?php echo get_the_title($spotlight[0]->ID); ?>
         </div>
       </div>
     </div>
@@ -38,9 +35,9 @@ use Roots\Sage\Assets;
     <div class="container">
       <div class="row">
         <div class="col-md-12 text-center extra-bottom-margin">
-          <div class="h2">
-            <span class="skew">Our Impact</span>
-          </div>
+          <h2>
+            <span class="skew">Our Challenge</span>
+          </h2>
         </div>
       </div>
 
@@ -60,8 +57,8 @@ use Roots\Sage\Assets;
                 <div class="spacer"></div>
                 <div class="circle">
                   <div class="wrap-content">
-                    <span class="stat">230</span>
-                    youth served through leadership program
+                    <span class="stat">500K</span>
+                    NC households pay more than half of their income on housing
                   </div>
                 </div>
               </div>
@@ -76,8 +73,8 @@ use Roots\Sage\Assets;
                 <div class="spacer"></div>
                 <div class="circle">
                   <div class="wrap-content">
-                    <span class="stat">$73M</span>
-                    in capital investments since inception
+                    <span class="stat">43%</span>
+                    of NC renter households can't afford a modest, 2br apartment
                   </div>
                 </div>
               </div>
@@ -108,8 +105,8 @@ use Roots\Sage\Assets;
                 <div class="spacer"></div>
                 <div class="circle">
                   <div class="wrap-content">
-                    <span class="stat">50K</span>
-                    citizens became home owners &amp; learned financial skills
+                    <span class="stat">85</span>
+                    hours per week at minimum wage is what is needed to afford a 2br apartment
                   </div>
                 </div>
               </div>
@@ -121,12 +118,19 @@ use Roots\Sage\Assets;
   </div>
 </section>
 
+<section class="nc-map">
+  <img src="<?php echo Assets\asset_path('images/map-banner.png'); ?>" srcset="<?php echo Assets\asset_path('images/map-banner@2x.png'); ?> 2x" alt="Map of North Carolina counties" />
+  <div class="wrap-content">
+    <a class="skew" href="#">Explore NC's affordable housing needs by county <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+  </div>
+</section>
+
 <section class="whats-new">
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
         <div class="striped-line">
-          <div class="h2">What's New</div>
+          <h2>What's New</h2>
         </div>
       </div>
     </div>
@@ -146,6 +150,18 @@ use Roots\Sage\Assets;
     </div>
 
     <div class="row">
+      <div class="col-md-4 housing-matters">
+        <a href="#">Housing Matters <strong>Newsletter</strong></a>
+      </div>
+      <div class="col-md-4 events">
+        <a href="#">Trainings <strong>And Events</strong></a>
+      </div>
+      <div class="col-md-4 jobs">
+        <a href="#">Job <strong>Opportunities</strong></a>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-12">
         <script src="//assets.juicer.io/embed.js" type="text/javascript"></script>
         <link href="//assets.juicer.io/embed.css" media="all" rel="stylesheet" type="text/css" />
@@ -155,18 +171,13 @@ use Roots\Sage\Assets;
   </div>
 </section>
 
-<section class="data-tracker">
+<section class="housing-news">
+  <div class="striped-line"></div>
+
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <div class="striped-line"></div>
-
-        <div class="data-banner has-notch">
-          <div class="title-top">Community Development</div>
-          <div class="title-bottom">Data Tracker</div>
-          <img class="data-bars" src="<?php echo Assets\asset_path('images/data-bars.png'); ?>" />
-          <a class="mega-link" href="/data/"></a>
-        </div>
+        <h2>Housing News</h2>
       </div>
     </div>
   </div>

@@ -4,21 +4,32 @@
 #wpadminbar .debug_objects_php_warning, #debugobjects li.debug_objects_php_warning,
 #wpadminbar .debug_objects_php_notice, #debugobjects li.debug_objects_php_notice,
 #wpadminbar .debug_objects_php_message, #debugobjects li.debug_objects_php_message {
-	background-color: #D54E21 !important;
-	background-image: none !important;
+	background: #d54e21 none !important;
 }
 
 #debugobjects * {
 	margin: 0;
+	padding: 0;
+	font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 	font-size: 12px;
-	line-height: 2em;
+	line-height: 1.6em;
+}
+
+#debugobjects a {
+	color: #fff;
+	background-color: #333;
+	padding: 0 3px;
+	text-decoration: none;
+}
+
+#debugobjects a:hover, .ui-state-active a {
+	background-color: #114477 !important;
+	color: #ccc !important;
 }
 
 div#debugobjects {
-	left: 1%;
-	right: 1%;
-	margin: 30px 10px;
-	font-size: 12px !important; /* fix for all themes */
+	margin: 30px 0;
+	font-size: 11px !important; /* fix for all themes */
 	color: #333;
 	background: #f0f0f0;
 	text-align: left;
@@ -28,17 +39,29 @@ div#debugobjects {
 }
 
 div#debugobjects code {
+	background: none;
+	background-color: #f7f7f7 !important;
 	word-wrap: break-word;
 	padding: 0;
+	color: #db4b39;
 }
 
 div#debugobjects pre {
+	color: #db4b39;
 	background: none;
-	background-color: transparent !important;
+	background-color: #f7f7f7 !important;
 	width: 100%;
 	overflow: auto;
 	white-space: pre-wrap;
 	word-wrap: break-word;
+}
+
+div#debugobjects .ui-tabs-nav li{
+	margin: 5px 1px 0 3px;
+}
+
+div#debugobjects .ui-tabs-nav li a {
+	padding: 1px 4px;
 }
 
 div#debugobjectstabs {
@@ -47,9 +70,8 @@ div#debugobjectstabs {
 
 div#debugobjectstabs, .ui-corner-all {
 	border: 1px solid #DFDFDF;
-	border-radius: 3px;
+	border-radius: 0;
 }
-
 
 div#debugobjects ol li {
 	margin: 5px 0 5px 15px;
@@ -60,14 +82,18 @@ div#debugobjects div div th {
 	padding: 5px;
 }
 
+div#debugobjects table th {
+	text-align: left;
+}
+
 div#debugobjects div div table, div#debugobjects div div td,
 div#debugobjects div div th {
 	border-collapse: collapse;
 	border: 1px solid #bbb;
 }
 
-div#debugobjects #memory ul, div#debugobjects #conditional_tags ul, 
-div#debugobjects #hooks ul, div#debugobjects #template ul, 
+div#debugobjects #memory ul, div#debugobjects #conditional_tags ul,
+div#debugobjects #hooks ul, div#debugobjects #template ul,
 div#debugobjects #cache ul, div#debugobjects #constants ul,
 div#debugobjects #queries ul {
 	list-style-type: disc;
@@ -107,10 +133,11 @@ div#debugobjects .important {
 	margin: 1em 0;
 }
 
-.admin-color-classic div#debugobjects .alternate, .admin-color-classic div#debugobjects .alt {
-	background: #d1e5ee;
+div#debugobjects table th:nth-child( odd ) {
+	background: #ccc;
 }
-.admin-color-fresh div#debugobjects .alternate, .admin-color-fresh div#debugobjects .alt {
+div#debugobjects .alternate, div#debugobjects .alt,
+div#debugobjects table tr:nth-child( odd ) {
 	background: #e6e6e6;
 }
 
@@ -129,13 +156,20 @@ div#debugobjects td {
 
 div#debugobjects ul li:hover, div#debugobjects ol li:hover,
 div#debugobjects tr:hover,
+div#debugobjects tr:hover > td, div#debugobjects tr:hover > th,
 div#debugobjects .alternate:hover, div#debugobjects .alt:hover {
 	background: #F7D0C3;
+	color: #333;
+	font-weight: bold;
 }
 
 div#debugobjects tr.nohover:hover {
 	background: none;
 	border: none;
+}
+
+div#debugobjects li.ui-corner-top {
+	border-radius: 0;
 }
 
 div#debugobjects li.none_list {

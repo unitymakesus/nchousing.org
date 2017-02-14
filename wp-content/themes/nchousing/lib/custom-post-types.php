@@ -2,6 +2,37 @@
 
 namespace Roots\Sage\CPT;
 
+register_post_type( 'housing-news',
+	array('labels' => array(
+			'name' => 'Housing News',
+			'singular_name' => 'Housing News',
+			'add_new' => 'Add New',
+			'add_new_item' => 'Add New Housing News',
+			'edit' => 'Edit',
+			'edit_item' => 'Edit Housing News',
+			'new_item' => 'New Housing News',
+			'view_item' => 'View Housing News',
+			'search_items' => 'Search Housing News',
+			'not_found' =>  'Nothing found in the Database.',
+			'not_found_in_trash' => 'Nothing found in Trash',
+			'parent_item_colon' => ''
+		), /* end of arrays */
+		'public' => true,
+		'exclude_from_search' => true,
+		'publicly_queryable' => true,
+		'show_ui' => true,
+		'show_in_nav_menus' => false,
+		'menu_position' => 8,
+		//'menu_icon' => get_stylesheet_directory_uri() . '/library/images/custom-post-icon.png',
+		'capability_type' => 'post',
+		'hierarchical' => false,
+		'supports' => array( 'title', 'revisions'),
+		'has_archive' => false,
+		'rewrite' => true,
+		'query_var' => true
+	)
+);
+
 add_action( 'init', function() {
 	register_post_type( 'resource',
 		array('labels' => array(

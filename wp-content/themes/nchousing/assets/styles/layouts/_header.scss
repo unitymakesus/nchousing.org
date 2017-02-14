@@ -19,7 +19,7 @@
 }
 
 .navbar {
-  padding-top: 31px;
+  padding-top: 13px;
 
   a {
     font-size: 18px;
@@ -43,11 +43,13 @@
   }
 
   .navbar-nav > li > a {
-    color: $gray;
+    color: $blue;
     background: none !important;
+    border-left: 1px solid $gold;
+    padding: 0 40px 0 10px;
 
     &:hover {
-      color: $teal;
+      color: $gray;
     }
 
     @media (max-width: 1125px) {

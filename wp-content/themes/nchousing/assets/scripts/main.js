@@ -69,6 +69,14 @@
         // JavaScript to be fired on the home page, after the init JS
       }
     },
+    // County Map page
+    'page_template_template_has_map': {
+      init: function() {
+        enqueueCounties();
+      },
+      finalize: function() {
+      }
+    },
     'single': {
       init: function() {
 

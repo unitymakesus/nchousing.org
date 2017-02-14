@@ -1,12 +1,12 @@
 .story {
-  margin-bottom: 4em;
+  // margin-bottom: 4em;
 
   .gradient-bg {
     @include gold-blue-gradient-bottom;
     padding-top: 4em;
   }
 
-  .h2 {
+  h2 {
     margin: 0 0 10px;
     color: $blue;
     position: relative;
@@ -31,7 +31,7 @@
   left: 50%;
   width: 70%;
   transform: translate3d(-50%, -50%, 0);
-  padding: 15px 0 15px 15px;
+  padding: 30px 0 30px 30px;
   background: $gold-lighter;
   color: $blue;
   font-size: 28px;
@@ -80,6 +80,16 @@
       transform: skewX(30deg);
     }
 
+    a {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+
     .wrap-content {
       position: absolute;
       height: 100%;
@@ -104,33 +114,33 @@
       }
     }
 
-    .h2 {
+    h2 {
       position: absolute;
       top: 10px;
-      left: -18px;
+      left: 0px;
 
       .skew {
         padding-left: 30px;
       }
     }
 
-    &:before {
-      content: '';
-      pointer-events: none;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      // background: $teal-lightest-50;
-      z-index: 1;
-      transform: translate3d(100%, 0, 0);
-      transition: transform .45s ease;
-
-      @media (max-width: $screen-sm-max) {
-        transform: skewX(30deg) translate3d(130%, 0, 0);
-      }
-    }
+    // &:before {
+    //   content: '';
+    //   pointer-events: none;
+    //   position: absolute;
+    //   top: 0;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 100%;
+    //   // background: $teal-lightest-50;
+    //   z-index: 1;
+    //   transform: translate3d(100%, 0, 0);
+    //   transition: transform .45s ease;
+    //
+    //   @media (max-width: $screen-sm-max) {
+    //     transform: skewX(30deg) translate3d(130%, 0, 0);
+    //   }
+    // }
 
     .solid-notch {
       opacity: 1;
@@ -170,32 +180,6 @@
         margin: 0 15px 0 0;
       }
     }
-
-    &:hover {
-      .background {
-        transform: translate3d(0, -50%, 0);
-
-        @media (min-width: $screen-md-min) {
-          transform: skewX(-30deg) translate3d(0, -50%, 0);
-        }
-      }
-
-      &:before {
-        transform: translate3d(-100%, 0, 0);
-
-        @media (max-width: $screen-sm-max) {
-          transform: skewX(30deg) translate3d(-130%, 0, 0);
-        }
-      }
-
-      .hover {
-        opacity: 1;
-      }
-
-      .solid-notch {
-        opacity: 0;
-      }
-    }
   }
 
   .mission {
@@ -220,6 +204,45 @@
         width: 218px;
         height: 100%;
         shape-outside: polygon(0 0, 100% 0, 100% 100%);
+      }
+    }
+  }
+
+  .spotlight {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: $blue;
+      opacity: .7;
+      z-index: 1;
+    }
+
+    .wrap-content {
+      z-index: 2;
+    }
+
+    .spotlight-content {
+      color: $white;
+      font-size: 28px;
+      text-align: right;
+      position: absolute;
+      right: 30px;
+      top: 50%;
+      transform: translate3d(0, -50%, 0);
+      width: 60%;
+    }
+
+    &:hover {
+      .background {
+        transform: translate3d(0, -50%, 0);
+
+        @media (min-width: $screen-md-min) {
+          transform: skewX(-30deg) translate3d(0, -50%, 0);
+        }
       }
     }
   }
@@ -298,9 +321,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    // @include teal-lightest-slant;
-    background-size: 230% 100%;
-    background-position: 0 0;
+    background-color: $blue;
     border-radius: 50%;
     text-align: center;
     transition: background-position .4s ease;
@@ -314,6 +335,7 @@
       line-height: 1.5em;
       padding: 0 20px;
       transition: transform .35s ease;
+      color: $white;
 
       @media (min-width: $screen-sm-min) {
         font-size: 18px;
@@ -325,21 +347,36 @@
       width: 100%;
       line-height: 1;
       font-family: $font-family-sans-serif;
-      color: $teal;
+      color: $white;
       font-weight: 800;
       font-size: $font-size-h1;
       transition: all .3s ease;
     }
   }
 
-  &:hover {
-    .circle {
-      background-position: 100% 0;
-    }
+  // &:hover {
+  //   .circle {
+  //     background-position: 100% 0;
+  //   }
+  //
+  //   .wrap-content {
+  //     transform: scale3d(.9, .9, 1) translate3d(0, -50%, 0);
+  //   }
+  // }
+}
 
-    .wrap-content {
-      transform: scale3d(.9, .9, 1) translate3d(0, -50%, 0);
-    }
+.nc-map {
+  position: relative;
+
+  img {
+    width: 100%;
+  }
+
+  .wrap-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
   }
 }
 
@@ -404,12 +441,5 @@
     .house {
       transform: scale3d(1, 1, 1);
     }
-  }
-}
-
-.sponsors {
-  img {
-    display: inline-block;
-    margin: 0 30px 15px;
   }
 }

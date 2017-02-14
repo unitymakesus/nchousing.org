@@ -1,12 +1,13 @@
 === Debug Objects ===
 Contributors: Bueltge, inpsyde
 Donate link: http://bueltge.de/wunschliste/
-Tags: debug, sql, analyse, tuning, performance, database, queries, query, php, cron, cache
+Tags: debug, sql, analyse, tuning, performance, database, queries, query, php, cron, cache, woocommerce, role, capability
 Requires at least: 3.3
-Tested up to: 4.5
-Stable tag: 2.3.1
+Tested up to: 4.7.1
+Stable tag: 2.4.0
 
 The Plugin Debug Objects provides a large number of information: query, cache, cron, constants, hooks, functions and many more.
+
 
 == Description ==
 The Plugin Debug Objects provides the user, which has the appropriate rights, normally the administrator, a large number of information: query, cache, cron, constants, hooks, functions and many many more. Values and content get displayed at the frontend and backend of the blog, to analyze errors but also to better understand and develop with/for WordPress.
@@ -52,8 +53,8 @@ The Plugin Debug Objects provides the user, which has the appropriate rights, no
 * See data from `$_POST`; `$_GET` and debug backtrace before rewrite; usefull for forms in backend
 * Run WordPress in default mode via url-param
 * Add alternative PHP Error reporting: [PHP Error](http://phperror.net/)
-* Include Logging in Chrome Console: [ChromeLogger](http://chromelogger.com/)
 * Support (WP Fields API)[https://github.com/sc0ttkclark/wordpress-fields-api]
+* WooCommerce, list current hooks and template arguments.
 * and many more ...
 
 
@@ -63,14 +64,11 @@ There are no data in the database and there are no settings. Therefore, the inst
 = Bugs, technical hints or contribute =
 Please give us feedback, contribute and file technical bugs on [GitHub Repo](https://github.com/bueltge/Debug-Objects).
 
-**Made by [Inpsyde](http://inpsyde.com) &middot; We love WordPress**
-
-Have a look at the premium plugins in our [market](http://marketpress.com).
 
 == Installation ==
 = Requirements =
-* WordPress (also Multisite) version 3.3 and later (tested at 3.3)
-* PHP 5.2.4, Tested with PHP 5.4
+* WordPress (also Multisite) version 3.3 and later (tested at 4.7)
+* PHP 5.2.4, Tested with PHP 7
 
 = Installation =
 1. Unpack the download-package
@@ -84,15 +82,24 @@ Have a look at the premium plugins in our [market](http://marketpress.com).
 1. Example Screenshot (WordPress 3.3)
 2. Another Example with the current hooks of this back end page (WordPress 3.8-alpha)
 
+
 == Other Notes ==
 = Older versions =
-You find older version on this repo, [here](http://wordpress.org/plugins/debug-objects/developers/) But only to version 2.1.14
-After this version you find the other verison on the [github repo](https://github.com/bueltge/Debug-Objects)
+You find older version on this repo [here](http://wordpress.org/plugins/debug-objects/developers/).
 
 = License =
 Good news, this plugin is free for everyone! Since it's released under the GPL, you can use it free of charge on your personal or commercial blog. But if you enjoy this plugin, you can thank me and leave a [small donation](http://bueltge.de/wunschliste/ "Wishliste and Donate") for the time I've spent writing and supporting this plugin. And I really don't want to know how many hours of my life this plugin has already eaten ;)
 
+
 == Changelog ==
+= 2.4.0 (2017-01-17) =
+* Remove ChromePHP and SuperVarDump Library; simple custom function is helpful enough.
+* Changes for Codex rules.
+* Enhance debug helper function `debug_to_console`. Now with a second param to add a description for output and add a buffer.
+* Enhance the view of DB queries, smaller, easier - faster to read.
+* Remove deprecated function `is_comments_popup` in conditional tags.
+* Add WooCommerce Helper, list all WooCommerce hooks, there fired and template arguments.
+
 = 2.3.1 (2016-03-31) =
 * Fix small issue for Inspector and his records.
 

@@ -27,7 +27,7 @@
 
   &:hover {
     .entry-header {
-      background-color: lighten($rust, 10%);
+      background-color: $gold-lighter;
       transform: scale(1.025);
 
       @media (min-width: $screen-sm-min) {

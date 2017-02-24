@@ -276,3 +276,24 @@ pre {
 .uppercase {
   text-transform: uppercase;
 }
+
+.text-col-lg-4 {
+  @include respondto(lg) {
+    column-count: 4;
+    column-gap: 20px;
+  }
+}
+
+.text-col-md-3 {
+  @include respondto(md) {
+    column-count: 3;
+    column-gap: 20px;
+  }
+}
+
+.text-col-sm-2 {
+  @include respondto(sm) {
+    column-count: 2;
+    column-gap: 20px;
+  }
+}

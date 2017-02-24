@@ -1,5 +1,5 @@
 <div class="well">
-  <h4>Search Resources</h4>
+  <h4>Search Reports</h4>
   <form class="form-inline" method="get" action="<?php the_permalink() ?>">
     <div class="form-group col-xs-9">
       <label class="hidden" for="k">Search</label>
@@ -11,7 +11,7 @@
 </div>
 
 <div class="well">
-  <h4>Resource Categories</h4>
+  <h4>Report Categories</h4>
   <?php $terms = get_terms('resource-type'); ?>
   <ul class="nav nav-stacked has-padding">
     <?php foreach( $terms as $term) { ?>

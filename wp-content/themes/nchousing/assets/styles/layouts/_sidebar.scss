@@ -11,6 +11,14 @@
 
     li {
       display: list-item;
+      margin: 0 !important;
+      padding: 0;
+      color: $text-color;
+      line-height: 1em;
+
+      &::before {
+        display: none;
+      }
 
       a {
         color: $gray-dark;
@@ -19,6 +27,9 @@
         white-space: normal;
         font-size: 16px;
         padding: 7px 0;
+        text-align: left;
+        text-transform: none;
+        line-height: 1;
 
         &:hover, &:active, &:focus {
           color: $blue;
@@ -29,6 +40,7 @@
 
       &.active > a {
         color: $blue;
+        text-decoration: underline;
       }
     }
 

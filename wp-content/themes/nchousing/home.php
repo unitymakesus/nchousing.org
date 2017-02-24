@@ -121,7 +121,7 @@ use Roots\Sage\Assets;
 <section class="nc-map">
   <img src="<?php echo Assets\asset_path('images/map-banner.png'); ?>" srcset="<?php echo Assets\asset_path('images/map-banner@2x.png'); ?> 2x" alt="Map of North Carolina counties" />
   <div class="wrap-content">
-    <a class="skew" href="#">Explore NC's affordable housing needs by county <i class="fa fa-chevron-circle-right" aria-hidden="true"></i></a>
+    <a class="btn-skew btn btn-gold btn-lg" href="#"><span class="shape"></span>Explore NC's affordable housing needs by county <i class="glyphicon glyphicon-menu-right" aria-hidden="true"></i></a>
   </div>
 </section>
 

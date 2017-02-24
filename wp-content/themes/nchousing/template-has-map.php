@@ -1,6 +1,7 @@
 <?php
 /* Template Name: Page with County Map */
 
+use Roots\Sage\Extras;
 use Roots\Sage\Setup;
 
 get_template_part('templates/components/header', get_post_type());
@@ -28,7 +29,13 @@ get_template_part('templates/components/header', get_post_type());
 </div><!-- /.container -->
 
 <section class="county-map">
-  <?php get_template_part('templates/components/county-map'); ?>
+  <?php
+  // Display map
+  get_template_part('templates/components/county-map');
+
+  // Get links to county resources
+  $downloads = get_field('county_downloads');
+  ?>
 
   <script type="text/javascript">
     <?php
@@ -38,10 +45,12 @@ get_template_part('templates/components/header', get_post_type());
 
       // Loop through counties to make an array with the config for the map
       foreach ($counties as $county) {
+        $key = Extras\object_search_deep($downloads, 'post_title', $county);
+
         $map_config["map_$i"] = array(
           'hover' => $county,
       		'enable' => true,
-      		'url' => 'http://www.html5interactivemaps.com/',
+      		'url' => wp_get_attachment_url($downloads[$key]->ID),
       		'target' => 'new_window', //open link in new window:new_window, open in current window:same_window, or none for nothing.
       		'upColor' => '#535388', //county color when page loads
       		'overColor' => '#CB9F5B', //county color when mouse hover
@@ -53,6 +62,18 @@ get_template_part('templates/components/header', get_post_type());
     ?>
     var map_config = <?php echo json_encode($map_config); ?>;
   </script>
+</section>
+
+<section class="county-list container">
+  <div class="row extra-top-margin extra-bottom-margin">
+    <ul class="text-col-lg-4 text-col-md-3 text-col-sm-2">
+      <?php
+      foreach ($downloads as $dl) {
+        echo '<li><a href="' . wp_get_attachment_url($dl->ID) . '">' . $dl->post_title . '</a></li>';
+      }
+      ?>
+    </ul>
+  </div>
 </section>
 
 <?php if ($wp_query->max_num_pages > 1) : ?>

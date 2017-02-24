@@ -7,6 +7,7 @@
   text-decoration: none;
   z-index: 1;
   transition: all .3s ease;
+  box-shadow: none !important;
 
   &.menu-item {
     margin-left: 15px;
@@ -17,8 +18,8 @@
     }
 
     & > a, a:hover, a:focus, a:active {
-      color: $white !important;
-      padding: 10px 15px;
+      // color: $white;
+      // padding: 10px 15px;
       border: none;
     }
   }
@@ -66,4 +67,10 @@
 .donately-submit {
   @extend .btn;
   @extend .btn-skew;
+}
+
+.btn.btn-dark {
+  &:before {
+    @include blue-dark-right;
+  }
 }

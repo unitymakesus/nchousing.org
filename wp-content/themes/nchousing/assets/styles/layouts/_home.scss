@@ -378,6 +378,45 @@
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
   }
+
+  .btn {
+    position: relative;
+    padding-left: 40px;
+    padding-right: 80px;
+    max-width: 360px;
+    white-space: normal;
+    font-size: 1.8em;
+    text-transform: none;
+    text-align: left;
+    font-weight: normal;
+
+    &::before {
+      box-shadow: $gray-dark 0 0 30px;
+    }
+
+    .shape {
+      // display: block;
+      // float: left;
+      // shape-outside: polygon(0 0, 100% 0, 100% 100%, 30% 100%);
+      // shape-margin: 20px;
+      // width: 10px;
+      // height: 100px;
+      // margin: 10px;
+      // background-color: $blue;
+    }
+
+    i {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translate3d(0, -50%, 0);
+      background: rgba(255, 255, 255, .5);
+      color: $gold;
+      border-radius: 100%;
+      padding: 10px;
+      font-size: .6em;
+    }
+  }
 }
 
 .juicer-feed {

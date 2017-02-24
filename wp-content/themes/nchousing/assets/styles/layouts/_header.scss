@@ -35,27 +35,38 @@
   }
 
   .open.open > a {
-    color: $teal;
+    color: $blue;
   }
 
   @media (max-width: 1125px) {
     padding-top: 21px;
   }
 
-  .navbar-nav > li > a {
-    color: $blue;
-    background: none !important;
-    border-left: 1px solid $gold;
-    padding: 0 40px 0 10px;
+  .navbar-nav > li {
+    a {
+      color: $blue;
+      background: none;
+      border-left: 1px solid $gold;
+      padding: 0 40px 0 10px;
 
-    &:hover {
-      color: $gray;
+      &:hover {
+        color: $gray;
+      }
+
+      @media (max-width: 1125px) {
+        font-size: 16x;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
     }
 
-    @media (max-width: 1125px) {
-      font-size: 16x;
-      padding-left: 8px;
-      padding-right: 8px;
+    &.btn > a {
+      padding: 10px 15px;
+      color: $white !important;
+
+      &:hover, &:active, &:focus {
+        color: $white;
+      }
     }
   }
 }
@@ -71,18 +82,25 @@
     left: 0;
     right: auto;
     border-radius: 0;
+    border: 0;
 
     & > li > a {
       white-space: normal;
       font-size: 16px;
       padding-top: 7px;
       padding-bottom: 7px;
+      border: none;
+
+      &:hover {
+        color: $blue;
+        background: $gold-lighter;
+      }
     }
   }
 
   &:hover {
     & > a {
-      color: $teal !important;
+      color: $gold !important;
     }
 
     @media (min-width: $screen-md-min) {

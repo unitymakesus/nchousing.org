@@ -131,3 +131,12 @@ function get_adjacent_author_post( $previous = true ) {
 
   return $result;
 }
+
+// Search inside multimidensional object and return key
+function object_search_deep($haystack, $field, $value) {
+  foreach($haystack as $key => $item) {
+    if ( strpos($item->$field, $value) !== false )
+    return $key;
+  }
+  return false;
+}

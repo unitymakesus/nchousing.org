@@ -67,6 +67,10 @@
       &:hover, &:active, &:focus {
         color: $white;
       }
+
+      & + .dropdown-menu {
+        display: none !important;
+      }
     }
   }
 }

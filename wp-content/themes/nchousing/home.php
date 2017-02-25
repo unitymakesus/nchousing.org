@@ -16,7 +16,7 @@ use Roots\Sage\Assets;
 
     <div class="spotlight">
       <?php
-      $spotlight = get_posts(['numberposts' => 1, 'cat_name' => 'member-spotlight']);
+      $spotlight = get_posts(['numberposts' => 1, 'category_name' => 'member-spotlight']);
       $background = get_the_post_thumbnail_url($spotlight[0]->ID, 'medium');
       ?>
       <a href="<?php echo get_the_permalink($spotlight[0]->ID); ?>"></a>
@@ -47,7 +47,7 @@ use Roots\Sage\Assets;
             <div class="col-xs-6 col-md-12">
               <div class="notch-img">
                 <div class="notch-inner">
-                  <img src="<?php echo Assets\asset_path('images/leadership.jpg'); ?>" />
+                  <img src="<?php echo Assets\asset_path('images/home-img-1.jpg'); ?>" />
                 </div>
               </div>
             </div>
@@ -83,7 +83,7 @@ use Roots\Sage\Assets;
             <div class="col-xs-6 col-md-12">
               <div class="notch-img">
                 <div class="notch-inner">
-                  <img src="<?php echo Assets\asset_path('images/investment.jpg'); ?>" />
+                  <img src="<?php echo Assets\asset_path('images/home-img-2.jpg'); ?>" />
                 </div>
               </div>
             </div>
@@ -95,7 +95,7 @@ use Roots\Sage\Assets;
             <div class="col-xs-6 col-md-12">
               <div class="notch-img">
                 <div class="notch-inner">
-                  <img src="<?php echo Assets\asset_path('images/public-policy.jpg'); ?>" />
+                  <img src="<?php echo Assets\asset_path('images/home-img-3.jpg'); ?>" />
                 </div>
               </div>
             </div>
@@ -121,7 +121,7 @@ use Roots\Sage\Assets;
 <section class="nc-map">
   <img src="<?php echo Assets\asset_path('images/map-banner.png'); ?>" srcset="<?php echo Assets\asset_path('images/map-banner@2x.png'); ?> 2x" alt="Map of North Carolina counties" />
   <div class="wrap-content">
-    <a class="btn-skew btn btn-gold btn-lg" href="#"><span class="shape"></span>Explore NC's affordable housing needs by county <i class="glyphicon glyphicon-menu-right" aria-hidden="true"></i></a>
+    <a class="btn-skew btn btn-gold btn-lg" href="/county-fact-sheets/"><span class="shape"></span>Explore NC's affordable housing needs by county <i class="glyphicon glyphicon-menu-right" aria-hidden="true"></i></a>
   </div>
 </section>
 
@@ -150,22 +150,34 @@ use Roots\Sage\Assets;
     </div>
 
     <div class="row">
-      <div class="col-md-4 housing-matters">
-        <a href="#">Housing Matters <strong>Newsletter</strong></a>
-      </div>
-      <div class="col-md-4 events">
-        <a href="#">Trainings <strong>And Events</strong></a>
-      </div>
-      <div class="col-md-4 jobs">
-        <a href="#">Job <strong>Opportunities</strong></a>
+      <div class="col-md-12">
+        <script src="//assets.juicer.io/embed.js" type="text/javascript"></script>
+        <link href="//assets.juicer.io/embed.css" media="all" rel="stylesheet" type="text/css" />
+        <ul class="juicer-feed" data-feed-id="ncinitiative"></ul>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12">
-        <script src="//assets.juicer.io/embed.js" type="text/javascript"></script>
-        <link href="//assets.juicer.io/embed.css" media="all" rel="stylesheet" type="text/css" />
-        <ul class="juicer-feed" data-feed-id="ncinitiative"><h1 class="referral"><a href="https://www.juicer.io">Powered by Juicer</a></h1></ul>
+      <div class="col-md-4 housing-matters callout-overlay">
+        <div>
+          <img style="background-image: url(<?php echo Assets\asset_path('images/casa-salisbury-apts.jpg'); ?>);" class="background" />
+          <h3>Housing Matters <strong>Newsletter</strong></h3>
+          <a class="mega-link" href="/housing-matters-newsletter/"></a>
+        </div>
+      </div>
+      <div class="col-md-4 events callout-overlay">
+        <div>
+          <img style="background-image: url(<?php echo Assets\asset_path('images/housing-conf.jpg'); ?>);" class="background" />
+          <h3>Trainings <strong>And Events</strong></h3>
+          <a class="mega-link" href="/trainings-webinars/"></a>
+        </div>
+      </div>
+      <div class="col-md-4 jobs callout-overlay">
+        <div>
+          <img style="background-image: url(<?php echo Assets\asset_path('images/community-lobby.jpg'); ?>);" class="background" />
+          <h3>Job <strong>Opportunities</strong></h3>
+          <a class="mega-link" href="/job-listings/"></a>
+        </div>
       </div>
     </div>
   </div>
@@ -174,13 +186,68 @@ use Roots\Sage\Assets;
 <section class="housing-news">
   <div class="striped-line"></div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
-        <h2>Housing News</h2>
+  <?php
+
+  $hnews = new WP_Query([
+    'post_type' => 'housing-news',
+    'posts_per_page' => 1
+  ]);
+
+  if ($hnews->have_posts()) : while ($hnews->have_posts()) : $hnews->the_post();
+  ?>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="section-header">Housing News</h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <ul class="hnews-items">
+            <?php
+            $date = get_the_time('n/j/Y');
+            $items = get_field('news_item');
+
+            $i = 0;
+            $limit = 12;
+            $count = count($items);
+
+            // If count is less than limit, determine where to break the column. Otherwise, set column break at a third the limit
+            if ($count < $limit) {
+              $colbreak = floor($count/3);
+            } else {
+              $colbreak = $limit/3;
+            }
+
+            while ($i < $limit && $i < $count) {
+              if ($i > 0 && $i % $colbreak == 0) {
+                echo '</ul></div><div class="col-md-4"><ul class="hnews-items">';
+              }
+              $item = $items[$i];
+              ?>
+
+              <li data-source="<?php echo $item['link']; ?>">
+                <a class="mega-link" href="<?php echo $item['link']; ?>" target="_blank"></a>
+                <h3><?php echo $item['title']; ?></h3>
+                <p class="meta"><?php echo $item['source_name']; ?> | <?php echo $item['original_date']; ?> <span class="icon-external-link"></span></p>
+              </li>
+
+              <?php
+              $i++;
+            } ?>
+
+            <?php
+            if ($count > $limit) {
+              echo '<li><a class="btn btn-skew btn-gold" href="' . get_the_permalink() . '">See all of the latest housing news &raquo;</a></li>';
+            }
+            ?>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
+  <?php endwhile; endif; wp_reset_query(); ?>
+
 </section>
 
 <section class="stronger-together">

@@ -3,7 +3,7 @@ Contributors: Shelob9, Desertsnowman, christiechirinos
 Tags: forms, formbuilder, form builder, contact form, form, contact, custom form, custom forms, forms creator, caldera forms, calderawp, wp form, responsive, forms, form, drag and drop, email, awesome, wordpress free form builder, echecks, form builder plugin wordpress, wordpress builder plugin, wordpress forms builder, form builder wordpress, contact form builder wordpress, bootstrap, bootstrap form builder, bootstrap forms, login forms, drag and drop forms, responsive forms, mailchimp, mailchimp form, credit card form, braintree, braintree form, authorize.net, authorize.net form, eCheck,dwolla, dwolla form, paypal, paypal form, hi roy, search forms, pods, advanced custom fields, easy forms, contact form builder, gravity forms, contact, email, auto-responder, aweber, converkit, builder, contact forms, search, ab testing, a/b testing, split testing, shortcode, wordpress, awesome plugin, plugin, easy, braintree form, dwolla form, authorize.net form, mailchimp form, mailchimp popup, aweber form, converkit form, stripe form, stripe popup, eCheck form
 Requires at least: 4.5
 Tested up to: 4.7.3
-Stable tag: 1.5.0
+Stable tag: 1.5.0.3
 License: GPLv2
 
 A different kind of WordPress form builder.
@@ -740,8 +740,17 @@ This could also be a sign of a more serious issue on your server, but is probabl
 5. **Go Further With Form Processors** - Auto-responders, redirects included! Go further with our add-ons!
 
 == Changelog ==
+= Caldera Forms 1.5.0.1 ( February 22st, 2017) Über Sorry About HTML Fields =
+* See: [https://calderaforms.com/updates/caldera-forms-1-5-0-1](https://calderaforms.com/updates/caldera-forms-1-5-0-1)
+* FIXED: HTML fields were super-broken with accents, cyrillic, non standard UTF-8, and lots of other things.
+* FIXED: Fields hidden by conditional logic, which should have not made server-side validation errors were, but errors didn't show and it looked broken.
+* FIXED: Entry export or view could cause an error.
+* FIXED: API, and therefore entry viewer called a method that got lost between 1.5.0-b-2 and final.
+* FIXED: Shortcode for classic mode entry viewer.
+* FIXED: Checkbox fields, with no explicit value, don't return label for value, now they do.
+
 = Caldera Forms 1.5.0 ( February 21st, 2017) Volcano! =
-* See: [https://calderaforms.com/2017/02/update-new-field…end-entry-viewer?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms]
+* See: [https://calderaforms.com/2017/02/update-new-fields-front-end-entry-viewer](https://calderaforms.com/2017/02/update-new-fields-front-end-entry-viewer/?utm_source=dotOrg&utm_medium=plugins&utm_campaign=caldera-forms]
 * ADDED: A Front-end entry viewer.
 * ADDED: Conditional redirect processor.
 * ADDED: REST API for form and entry data.
@@ -813,7 +822,6 @@ NOTE: All bug fixes and new features from 1.4.x releases are included. So this s
 * FIXED: Duplicate forms created.
 * FIXED: Bug preventing custom field options set by filters form working in some situations.
 * FIXED: Form settings tab got messy. We tied it up a bit.
-
 
 
 = Caldera Forms 1.4.9 ( February 14, 2017 ) Be My Plugin Update =
@@ -1555,3 +1563,10 @@ See: https://calderaforms.com/updates/caldera-forms-1-4-8/
 
 = 1.4.9 =
 See: https://calderaforms.com/updates/caldera-forms-1-4-9/
+
+= 1.5.0 =
+See: https://calderaforms.com/2017/02/update-new-fields-front-end-entry-viewer/
+
+= 1.5.0.1 =
+See: https://calderaforms.com/updates/caldera-forms-1.5.0.1/
+

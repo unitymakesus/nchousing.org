@@ -12,6 +12,7 @@
   &.menu-item {
     margin-left: 15px;
     padding: 0;
+    z-index: inherit;
 
     @media (max-width: $screen-sm-max) {
       max-width: 200px;

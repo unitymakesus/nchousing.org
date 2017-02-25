@@ -423,14 +423,113 @@
   &.slider {
     padding-bottom: 40px;
   }
+}
 
-  h1.referral {
+.callout-overlay {
+  position: relative;
+
+  & > div {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 60%;
+    overflow: hidden;
+
+    &::before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      background-size: 230% 100%;
+      background-position: -111px 0;
+    }
+  }
+
+  &.housing-matters > div::before {
+    @include trans-blue-lightest-to-dark-slant;
+  }
+
+  &.events > div::before {
+    @include trans-gold-light-to-dark-slant;
+  }
+
+  &.jobs > div::before {
+    @include trans-teal-light-to-dark-slant;
+  }
+
+  .background {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    top: 50%;
+    width: 100%;
+    min-height: 100%;
+    transform: translate3d(0, -50%, 0) scale3d(1.05, 1.05, 1);
+    transition: transform .35s ease;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+  }
 
-    a {
-      font-color: $gray-lighter !important;
+  &:hover {
+    .background {
+      transform: translate3d(0, -50%, 0) scale3d(1, 1, 1);
+    }
+  }
+
+  h3 {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translate3d(0, -50%, 0);
+    padding: 0;
+    margin: 0;
+    font-weight: normal;
+    z-index: 3;
+    text-transform: uppercase;
+
+    strong {
+      display: block;
+    }
+  }
+}
+
+.housing-news {
+  &:not(.hentry) {
+    background: $gold-lighter;
+    padding-bottom: 2em;
+  }
+
+  .striped-line {
+    height: 30px;
+    margin-bottom: 0;
+  }
+
+  .section-header {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 1em 0;
+    font-size: $font-size-h3;
+  }
+
+  .hnews-items {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+
+    li {
+      position: relative;
+    }
+
+    h3 {
+      font-weight: normal;
+      font-size: 18px;
+      margin-bottom: 0;
+    }
+
+    .meta {
+      color: darken($gold, 5%);
     }
   }
 }

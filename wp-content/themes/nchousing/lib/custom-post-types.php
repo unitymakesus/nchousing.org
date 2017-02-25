@@ -27,7 +27,7 @@ register_post_type( 'housing-news',
 		'capability_type' => 'post',
 		'hierarchical' => false,
 		'supports' => array( 'title', 'revisions'),
-		'has_archive' => false,
+		'has_archive' => true,
 		'rewrite' => true,
 		'query_var' => true
 	)

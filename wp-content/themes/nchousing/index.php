@@ -18,9 +18,12 @@ get_template_part('templates/components/header', get_post_type());
 
       if (is_post_type_archive('resource') || is_tax('resource-type')) :
         get_template_part('templates/layouts/block', 'resource');
+
+      elseif (is_post_type_archive('housing-news')) :
+        get_template_part('templates/layouts/content', 'housing-news');
       else :
         while (have_posts()) : the_post();
-          if (is_page('whats-new')) {
+          if (is_page('news')) {
             get_template_part('templates/layouts/loop', 'blog');
           } elseif (is_archive()) {
             get_template_part('templates/layouts/block', 'post-side');

@@ -23,7 +23,7 @@
     }
 
     &:hover {
-      color: darken($teal, 10%);
+      color: $gold-lighter;
     }
   }
 
@@ -34,6 +34,10 @@
 
   .btn {
     margin-left: 14px;
+
+    &:hover {
+      color: $white;
+    }
   }
 
   .navbar-nav {
@@ -42,7 +46,8 @@
       float: none;
 
       &.btn {
-        display: none;
+        text-align: left;
+        margin-left: 0;
       }
 
       a {
@@ -52,6 +57,11 @@
         br {
           display: none;
         }
+
+        &:hover {
+          background: $blue-light;
+          color: $white;
+        }
       }
     }
   }
@@ -60,6 +70,7 @@
 .below-footer {
   background: $white;
   color: $text-color;
+  font-size: 16px;
 
   .container {
     padding-top: 15px;
@@ -68,5 +79,9 @@
 
   a {
     color: $text-color;
+
+    &:hover {
+      color: $blue-light;
+    }
   }
 }

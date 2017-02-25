@@ -54,7 +54,9 @@ $teal-lightest-50:      rgba(183, 216, 209, .5);
 $teal-lightest-75:      rgba(183, 216, 209, .75);
 
 $gold-10:               hsla(36,24,90,.1);
+$gold-75:               hsla(36,24,90,.75);
 $blue-75:               rgba(83, 83, 136, .75);
+$blue-lightest-75:       rgba(233,234,240, .75);
 $blue-35:               rgba(83, 83, 136, .35);
 
 // Set standards
@@ -129,6 +131,22 @@ $link-hover-color:      $blue-lighter;
   background-image: -moz-linear-gradient(60deg, $blue-75 50%, $blue 50%);
   background-image: -ms-linear-gradient(60deg, $blue-75 50%, $blue 50%);
   background-image: linear-gradient(60deg, $blue-75 50%, $blue 50%);
+}
+
+@mixin trans-blue-lightest-to-dark-slant() {
+  @include filter-gradient($blue-lightest-75, $blue, horizontal);
+  background-image: -o-linear-gradient(60deg, $blue-lightest-75 50%, $blue 50%);
+  background-image: -moz-linear-gradient(60deg, $blue-lightest-75 50%, $blue 50%);
+  background-image: -ms-linear-gradient(60deg, $blue-lightest-75 50%, $blue 50%);
+  background-image: linear-gradient(60deg, $blue-lightest-75 50%, $blue 50%);
+}
+
+@mixin trans-gold-light-to-dark-slant() {
+  @include filter-gradient($gold-75, $gold, horizontal);
+  background-image: -o-linear-gradient(60deg, $gold-75 50%, $gold 50%);
+  background-image: -moz-linear-gradient(60deg, $gold-75 50%, $gold 50%);
+  background-image: -ms-linear-gradient(60deg, $gold-75 50%, $gold 50%);
+  background-image: linear-gradient(60deg, $gold-75 50%, $gold 50%);
 }
 
 @mixin trans-teal-light-to-dark-slant() {

@@ -40,9 +40,9 @@
     background-position: -111px 0;
     z-index: 2;
     transition: background-position .4s ease;
+    color: $white;
 
     .post-title {
-      color: $gray-dark;
       font-size: 16px;
       line-height: 1.5em;
     }
@@ -131,10 +131,10 @@
     }
 
     .entry-meta {
-      color: $teal;
+      color: $gold-lighter;
 
       &:before {
-        color: $text-color;
+        color: $gold-lighter;
         content: ' | ';
       }
     }

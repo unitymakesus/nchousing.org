@@ -45,15 +45,15 @@ use Roots\Sage\Nav;
     <div class="col-md-5">
       <address>5800 Faringdon Place<br />
         Raleigh, NC 27609</address>
-      <p><tel>919.881.0707</tel> | <a href="#">Contact Us</a></p>
+      <p><tel>919.881.0707</tel> | <a href="/contact/">Contact Us</a></p>
       <br />
-      <p><a class="btn btn-skew btn-lg btn-gold" data-toggle="modal" data-target="#emailSignupModal">Subscribe</a></p>
+      <p><a class="btn btn-skew btn-lg btn-gold" href="/housing-matters-newsletter/">Subscribe</a></p>
     </div>
 
     <div class="col-md-3">
       <?php
       if (has_nav_menu('primary_navigation')) :
-        wp_nav_menu(['theme_location' => 'primary_navigation', 'menu_class' => 'nav navbar-nav', 'depth' => 1, 'walker' => new Nav\NavWalker()]);
+        wp_nav_menu(['theme_location' => 'footer_navigation', 'menu_class' => 'nav navbar-nav', 'depth' => 1, 'walker' => new Nav\NavWalker()]);
       endif;
       ?>
     </div>
@@ -66,7 +66,7 @@ use Roots\Sage\Nav;
           <a href="https://www.unitymakes.us/" target="_blank" class="unity-link">
             <?php echo file_get_contents(Assets\asset_path('images/made-with-unity.svg')); ?>
           </a>
-          <span class="copyright">Copyright &copy; <?php echo date('Y'); ?> &nbsp;|&nbsp; North Carolina Housing Coalition &nbsp;|&nbsp; <a href="#">Privacy Policy</a></span>
+          <span class="copyright">Copyright &copy; <?php echo date('Y'); ?> &nbsp;|&nbsp; North Carolina Housing Coalition &nbsp;|&nbsp; <a href="/privacy-policy/">Privacy Policy</a></span>
         </div>
 
         <div class="col-md-3 text-right">
@@ -78,5 +78,3 @@ use Roots\Sage\Nav;
     </div>
   </div>
 </footer>
-
-<?php get_template_part('templates/components/email-signup'); ?>

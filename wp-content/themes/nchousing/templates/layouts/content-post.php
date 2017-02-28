@@ -66,6 +66,8 @@ $featured_image_align = get_post_meta(get_the_ID(), $prefix . 'featured_image_al
       </div>
     </div>
   <?php } else { ?>
+    <div class="page-header photo-overlay"></div>
+
     <header class="entry-header container">
       <div class="row">
         <div class="col-md-8 col-centered">

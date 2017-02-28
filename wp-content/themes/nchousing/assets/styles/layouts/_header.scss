@@ -36,6 +36,10 @@
 
   .open.open > a {
     color: $blue;
+
+    &:focus, &:hover {
+      background: $white;
+    }
   }
 
   @media (max-width: 1125px) {
@@ -47,22 +51,32 @@
       color: $blue;
       background: none;
       border-left: 1px solid $gold;
-      padding: 0 40px 0 10px;
+      padding: 10px 40px 10px 10px;
 
-      &:hover {
-        color: $gray;
+      @media (max-width: $screen-sm-max) {
+        br {
+          display: none;
+        }
+      }
+
+      @media (min-width: $screen-md-min) {
+        padding: 0 40px 0 10px;
       }
 
       @media (max-width: 1125px) {
         font-size: 16x;
-        padding-left: 8px;
-        padding-right: 8px;
+        // padding-left: 8px;
+        // padding-right: 8px;
       }
     }
 
     &.btn > a {
       padding: 10px 15px;
       color: $white !important;
+
+      .caret {
+        display: none;
+      }
 
       &:hover, &:active, &:focus {
         color: $white;

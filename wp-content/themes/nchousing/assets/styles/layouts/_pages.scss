@@ -69,7 +69,7 @@
     &:after {
       content: '';
       position: absolute;
-      @include trans-teal-dark-slant;
+      @include trans-blue-dark-slant;
       transform: scale3d(1.5, 1.5, 1);
       top: 0;
       right: -50%;

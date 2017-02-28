@@ -84,4 +84,10 @@
       color: $blue-light;
     }
   }
+
+  .text-right {
+    @media (max-width: $screen-xs-max) {
+      text-align: left;
+    }
+  }
 }

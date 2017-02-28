@@ -31,6 +31,10 @@
         text-transform: none;
         line-height: 1;
 
+        br {
+          display: none;
+        }
+
         &:hover, &:active, &:focus {
           color: $blue;
           text-decoration: underline;

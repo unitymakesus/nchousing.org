@@ -71,7 +71,7 @@
 
   .mission, .spotlight {
     position: relative;
-    height: 375px;
+    height: 450px;
     overflow: hidden;
 
     @media (min-width: $screen-md-min) {
@@ -117,7 +117,11 @@
     h2 {
       position: absolute;
       top: 10px;
-      left: 0px;
+      left: 10px;
+
+      @media (min-width: $screen-md-min) {
+        left: 0;
+      }
 
       .skew {
         padding-left: 30px;
@@ -183,7 +187,6 @@
   }
 
   .mission {
-    width: 85%;
     .hover {
       li {
         clear: left;
@@ -193,6 +196,7 @@
 
     @media (min-width: $screen-md-min) {
       left: -110px;
+      width: 85%;
 
       .wrap-content {
         left: 110px;
@@ -307,8 +311,13 @@
 .circle-stat {
   position: relative;
   width: 75%;
-  float: right;
+  margin: 0 auto 1em;
   z-index: 10;
+
+  @media (min-width: $screen-sm-min) {
+    float: right;
+    margin: 0;
+  }
 
   .spacer {
     height: 0;
@@ -375,20 +384,31 @@
   .wrap-content {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
+    left: 20px;
+    right: 20px;
+    transform: translate3d(0, -50%, 0);
+
+    @media (min-width: $screen-sm-min) {
+      left: 50%;
+      right: auto;
+      transform: translate3d(-50%, -50%, 0);
+    }
   }
 
   .btn {
     position: relative;
-    padding-left: 40px;
-    padding-right: 80px;
-    max-width: 360px;
-    white-space: normal;
-    font-size: 1.8em;
     text-transform: none;
     text-align: left;
     font-weight: normal;
+    white-space: normal;
+    max-width: 100%;
+
+    @media (min-width: $screen-sm-min) {
+      padding-left: 40px;
+      padding-right: 80px;
+      max-width: 360px;
+      font-size: 1.8em;
+    }
 
     &::before {
       box-shadow: $gray-dark 0 0 30px;
@@ -532,52 +552,72 @@
       color: darken($gold, 5%);
     }
   }
+
+  .btn.btn {
+    white-space: normal;
+    max-width: 90%;
+
+    @media (max-width: $screen-xs-max) {
+      max-width: 90%;
+      left: 5%;
+    }
+  }
 }
 
 .st-banner {
   position: relative;
   background: $black;
-  height: 270px;
   overflow: hidden;
   margin-bottom: 3em;
+  padding: 10px;
 
   .house {
-    position: relative;
-    width: 45%;
-    height: 100%;
-    transform: scale(1.05, 1.05, 1);
-    transition: transform .4s ease;
-
-    img {
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translate(0, -50%, 0);
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      width: 25%;
-      @include trans-black-gradient-right;
-      z-index: 5;
-    }
+    display: none;
   }
 
-  .st-logo {
-    position: absolute;
-    top: 50%;
-    left: 55%;
-    transform: translate(0, -50%, 0);
-    width: 40%;
-  }
+  @media (min-width: $screen-sm-min) {
+    height: 270px;
+    padding: 0;
 
-  &:hover {
     .house {
-      transform: scale3d(1, 1, 1);
+      display: block;
+      position: relative;
+      width: 45%;
+      height: 100%;
+      transform: scale(1.05, 1.05, 1);
+      transition: transform .4s ease;
+
+      img {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%, 0);
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 25%;
+        @include trans-black-gradient-right;
+        z-index: 5;
+      }
+    }
+
+    &:hover {
+      .house {
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+    .st-logo {
+      position: absolute;
+      top: 50%;
+      left: 55%;
+      width: 40%;
+      transform: translate(0, -50%, 0);
     }
   }
 }

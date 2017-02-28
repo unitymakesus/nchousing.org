@@ -4,6 +4,11 @@ namespace Roots\Sage\Setup;
 
 use Roots\Sage\Assets;
 
+// Increase file upload limit
+@ini_set( "upload_max_size" , "32M" );
+@ini_set( "post_max_size", "32M");
+@ini_set( "max_execution_time", "300" );
+
 /**
  * Theme setup
  */

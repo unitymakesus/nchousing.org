@@ -215,11 +215,7 @@ use Roots\Sage\Assets;
 
             // If count is less than limit, determine where to break the column. Otherwise, set column break at a third the limit
             if ($count < $limit) {
-              if ($count > 2) {
-                $colbreak = floor($count/3);
-              } else {
-                $colbreak = 1;
-              }
+              $colbreak = ceil($count/3);
             } else {
               $colbreak = $limit/3;
             }

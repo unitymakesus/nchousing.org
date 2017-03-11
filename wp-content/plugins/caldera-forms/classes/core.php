@@ -161,6 +161,8 @@ class Caldera_Forms {
 		/** Load magic tag system */
 		new Caldera_Forms_Magic();
 
+		//clear syncer cache on form update
+		add_action( 'caldera_forms_save_form', array( 'Caldera_Forms_Sync_Factory', 'clear_cache' ) );
 		/**
 		 * Runs after Caldera Forms core is initialized
 		 *
@@ -237,7 +239,17 @@ class Caldera_Forms {
 			return false;
 		}
 
-		$page_forms = array();
+		$has_shortcode = has_shortcode( $post->post_content, 'caldera_form' );
+		if( $has_shortcode ){
+			return true;
+		}
+
+		$has_shortcode = has_shortcode( $post->post_content, 'caldera_form_modal' );
+		if( $has_shortcode ){
+			return true;
+		}
+
+
 		// check active widgets
 		$sidebars = get_option( 'sidebars_widgets' );
 		if ( is_array( $sidebars ) && ! empty( $sidebars ) ) {
@@ -249,36 +261,52 @@ class Caldera_Forms {
 						if ( false !== strpos( $setup, 'caldera_forms_widget-' ) ) {
 							$widget_instance = str_replace( 'caldera_forms_widget-', '', $setup );
 							if ( ! empty( $form_widgets[ $widget_instance ][ 'form' ] ) ) {
-								$form_id                = $form_widgets[ $widget_instance ][ 'form' ];
-								$page_forms[ $form_id ] = $form_id;
+								return true;
 							}
 						}
 					}
 				}
 			}
 		}
-		$codes = get_shortcode_regex();
-		preg_match_all( '/' . $codes . '/s', $post->post_content, $found );
-		if ( ! empty( $found[ 0 ][ 0 ] ) ) {
-			foreach ( $found[ 2 ] as $index => $code ) {
-				if ( 'caldera_form' === $code || $code == 'caldera_form_modal' ) {
-					if ( ! empty( $found[ 3 ][ $index ] ) ) {
-						$atts = shortcode_parse_atts( $found[ 3 ][ $index ] );
-						if ( isset( $atts[ 'id' ] ) ) {
-							$page_forms[ $atts[ 'id' ] ] = $atts[ 'id' ];
-						}
-					}
-				}
-			}
+
+
+		return false;
+
+	}
+
+	/**
+	 * Create a modal button's HTML
+	 *
+	 * @since 1.5.0.4
+	 *
+	 * @param array $atts Form atts
+	 * @param string $content Content for opener
+	 * @param array $form Form config
+	 *
+	 * @return string
+	 */
+	protected static function modal_button( $atts, $content, $form, $modal_id ){
+		if ( empty( $content ) ) {
+			$content = $form[ 'name' ];
 		}
 
-		//none!
-		if ( empty( $page_forms ) ) {
-			return false;
+		$tag_atts = sprintf( 'data-form="%1s"', $form[ 'ID' ] );
+
+		if ( ! empty( $atts[ 'width' ] ) ) {
+			$tag_atts .= sprintf( ' data-width="%1s"', $atts[ 'width' ] );
+		}
+		if ( ! empty( $atts[ 'height' ] ) ) {
+			$tag_atts .= sprintf( ' data-height="%1s"', $atts[ 'height' ] );
 		}
 
-		return true;
 
+		$title = __( sprintf( 'Click to open the form %1s in a modal', $form[ 'name' ] ), 'caldera-forms' );
+		if ( ! empty( $atts[ 'type' ] ) && $atts[ 'type' ] == 'button' ) {
+			$tag_atts .= sprintf( 'data-remodal-target="%1s"', $modal_id );
+			return sprintf( '<button class="caldera-forms-modal" %s title="%s">%s</button>', $tag_atts, $title, $content );
+		} else {
+			return sprintf( '<a href="%s" class="caldera-forms-modal" %s title="%s">%s</a>', '#' . $modal_id, $tag_atts, esc_attr( $title ), $content );
+		}
 	}
 
 	/**
@@ -1127,8 +1155,9 @@ class Caldera_Forms {
 			),
 			'conditional_recipient'	=> array(
 				"name"        => __( 'Conditional Recipient', 'caldera-forms' ),
-				"description" => __( 'Send email to different recipients depending on conditons', 'caldera-forms' ),
+				"description" => __( 'Send email to different recipients depending on conditions', 'caldera-forms' ),
 				"template"    => CFCORE_PATH . "processors/conditional_recipient/config.php",
+				'post_processor' => array( 'Caldera_Forms_Processor_Conditional_Recipient', 'post_processor' ),
 				"single"      => false
 			),
 			'increment_capture' => array(
@@ -1307,6 +1336,9 @@ class Caldera_Forms {
 	 * @return int|string
 	 */
 	static public function run_calculation( $value, $field, $form ) {
+		if( false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ){
+			return;
+		}
 
 		$formula = $field[ 'config' ][ 'formular' ];
 
@@ -1352,11 +1384,15 @@ class Caldera_Forms {
 			}
 		}
 
+		if( false !== strpos( $formula, '/0' ) ){
+			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid (division by zero)', 'caldera-forms' ) );
+		}
+
 		$total_function = create_function( null, 'return ' . $formula . ';' );
 		$total          = $total_function();
 
-		if ( ! is_numeric( $total ) ) {
-			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid' ) );
+		if ( is_infinite( $total ) || ! is_numeric( $total ) ) {
+			return new WP_Error( $field[ 'ID' ] . '-calculation', __( 'Calculation is invalid', 'caldera-forms' ) );
 		}
 
 		if ( isset( $field[ 'config' ][ 'fixed' ] ) ) {
@@ -2189,7 +2225,6 @@ class Caldera_Forms {
 				$entry = apply_filters( 'caldera_forms_process_field_' . $field[ 'type' ], $entry, $field, $form );
 				if ( is_wp_error( $entry ) ) {
 					$processed_data[ $indexkey ][ $field_id ] = $entry;
-
 					return $entry;
 				}
 			}
@@ -2819,15 +2854,10 @@ class Caldera_Forms {
 						continue;
 					}
 					// check if conditions match first. ignore vailators if not part of condition
-					if ( ! empty( $field[ 'conditions' ][ 'type' ] ) ) {
-						$conditional =  $field[ 'conditions' ];
-						if ( ! empty( $form[ 'conditional_groups'][ 'conditions'][ $field[ 'conditions' ]['type' ] ] )  ) {
-							$conditional = $form[ 'conditional_groups' ][ 'conditions' ][ $field[ 'conditions' ][ 'type' ] ];
-						}
-						if ( ! self::check_condition( $conditional, $form ) ) {
-							continue;
-						}
+					if ( false === Caldera_Forms_Field_Util::check_conditional( $field, $form ) ) {
+						continue;
 					}
+
 					// if error - return so
 					if ( is_wp_error( $entry ) ) {
 						$transdata[ 'fields' ][ $field_id ] = $entry->get_error_message();
@@ -3634,8 +3664,6 @@ class Caldera_Forms {
 	 *
 	 * @since unknown
 	 *
-	 * @deprecated 1.3.1
-	 *
 	 * @param string|array $atts Shortcode atts or form ID
 	 * @param string $content Content to use in trigger link.
 	 *
@@ -3655,19 +3683,11 @@ class Caldera_Forms {
 		if ( ! empty( $atts[ 'entry' ] ) ) {
 			$form_atts[ 'entry' ] = $atts[ 'entry' ];
 		}
-		$modal_button_classes = array(
-			"cf_modal_button"
-		);
 
-		if ( ! empty( $atts[ 'classes' ] ) ) {
-			$modal_button_classes = array_merge( $modal_button_classes, explode( ',', $atts[ 'classes' ] ) );
-		}
+		$modal_id = 'cf-modal-' . uniqid( $form[ 'ID' ] );
 
-		$modal_id = uniqid( $form[ 'ID' ] );
+		$out = self::modal_button( $atts, $content, $form, $modal_id );
 
-		$out = "<a class=\" " . implode( ' ', $modal_button_classes ) . "\" href=\"#" . $modal_id . "\">" . $content . "</a>\r\n";
-
-		$current_state = 'style="display:none;"';
 		if(!empty($_GET['cf_er'])){
 			$transdata = Caldera_Forms_Transient::get_transient( $_GET[ 'cf_er' ] );
 			if($transdata['transient'] == $_GET['cf_er']){
@@ -3679,32 +3699,17 @@ class Caldera_Forms {
 			unset( $_GET[ 'cf_su' ] );
 		}
 
-		$width = '';
-		if ( ! empty( $atts[ 'width' ] ) ) {
-			$width = ' width: ' . floatval( $atts[ 'width' ] ) . 'px; margin-left: -' . ( floatval( $atts[ 'width' ] ) / 2 ) . 'px;';
-		}
-
 		ob_start();
 		?>
-		<div id="<?php echo esc_attr( $modal_id ); ?>"
-		     class="caldera-front-modal-container" <?php echo $current_state; ?>
-		     data-form-id="<?php echo esc_attr( $modal_id ); ?>">
-			<div class="caldera-backdrop"></div>
-			<div id="<?php echo $modal_id; ?>_modal_wrap" tabindex="-1"
-			     arialabelled-by="<?php echo $modal_id; ?>_modal_label"
-			     class="caldera-modal-wrap caldera-front-modal-wrap" style="display: block; <?php echo $width; ?>">
-				<div class="caldera-modal-title" id="<?php echo $modal_id; ?>_modal_title" style="display: block;">
-					<a href="#close" class="caldera-modal-closer caldera-front-modal-closer" data-dismiss="modal"
-					   aria-hidden="true" id="<?php echo $modal_id; ?>_modal_closer">&times;</a>
-					<h3 class="modal-label"
-					    id="<?php echo $modal_id; ?>_modal_label"><?php echo $form[ 'name' ]; ?></h3>
-				</div>
-				<div class="caldera-modal-body caldera-front-modal-body" id="<?php echo $modal_id; ?>_modal_body">
-					<?php echo self::render_form( $form_atts ); ?>
-				</div>
+		<div data-remodal-id="<?php echo esc_attr( $modal_id ); ?>"  id="<?php echo esc_attr( $modal_id ); ?>" class="remodal caldera-front-modal-container" data-form-id="<?php echo esc_attr( $modal_id ); ?>"  data-remodal-options="hashTracking: true, closeOnOutsideClick: false">
+			<button data-remodal-action="close" class="remodal-close"></button>
+			<div class="caldera-modal-body caldera-front-modal-body" id="<?php echo $modal_id; ?>_modal_body">
+				<?php echo self::render_form( $form_atts ); ?>
 			</div>
 		</div>
+
 		<?php
+		Caldera_Forms_Render_Assets::enqueue_modals();
 		self::$footer_modals .= ob_get_clean();
 
 		return $out;
@@ -3763,16 +3768,20 @@ class Caldera_Forms {
 			$field_wrapper_class .= " " . implode( ' ', $field_classes[ 'field_error' ] );
 		}
 
+		if ( ! empty( $field[ 'hide_label' ] ) ) {
+			$field_classes[ 'field_label' ][] = 'screen-reader-text';
+		}
+
 		$field_structure = array(
 			"field"             => $field,
 			"id"                => $field[ 'ID' ],//'fld_' . $field['slug'],
 			"name"              => $field[ 'ID' ],//$field['slug'],
 			"wrapper_before"    => "<div role=\"field\" data-field-wrapper=\"" . $field[ 'ID' ] . "\" class=\"" . $field_wrapper_class . "\">\r\n",
 			"field_before"      => "<div class=\"" . $field_input_class . "\">\r\n",
-			"label_before"      => ( empty( $field[ 'hide_label' ] ) ? "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field[ 'ID' ] . '_' . $current_form_count . "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">" : null ),
-			"label"             => ( empty( $field[ 'hide_label' ] ) ? $field[ 'label' ] : null ),
+			"label_before"      =>  "<label id=\"" . $field[ 'ID' ] . "Label\" for=\"" . $field[ 'ID' ] . '_' . $current_form_count . "\" class=\"" . implode( ' ', $field_classes[ 'field_label' ] ) . "\">",
+			"label"             =>  $field[ 'label' ],
 			"label_required"    => ( empty( $field[ 'hide_label' ] ) ? ( ! empty( $field[ 'required' ] ) ? " <span aria-hidden=\"true\" role=\"presentation\" class=\"" . implode( ' ', $field_classes[ 'field_required_tag' ] ) . "\" style=\"color:#ee0000;\">*</span>" : "" ) : null ),
-			"label_after"       => ( empty( $field[ 'hide_label' ] ) ? "</label>" : null ),
+			"label_after"       => "</label>",
 			"field_placeholder" => ( ! empty( $field[ 'hide_label' ] ) ? 'placeholder="' . htmlentities( $field[ 'label' ] ) . '"' : null ),
 			"field_required"    => ( ! empty( $field[ 'required' ] ) ? 'required="required"' : null ),
 			"field_value"       => null,
@@ -3781,14 +3790,9 @@ class Caldera_Forms {
 			"wrapper_after"     => "</div>\r\n",
 			"aria"              => array()
 		);
-		// if has label
-		if ( empty( $field[ 'hide_label' ] ) ) {
-			// visible label, set labelled by
-			$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
-		} else {
-			// hidden label, aria label instead
-			$field_structure[ 'aria' ][ 'label' ] = $field[ 'label' ];
-		}
+
+		$field_structure[ 'aria' ][ 'labelledby' ] = $field[ 'ID' ] . 'Label';
+
 		// if has caption
 		if ( ! empty( $field[ 'caption' ] ) ) {
 			$field_structure[ 'aria' ][ 'describedby' ] = $field[ 'ID' ] . 'Caption';
@@ -4643,43 +4647,13 @@ class Caldera_Forms {
 		if ( ! isset( $atts[ 'id' ] ) ) {
 			return;
 		}
-		if ( $shortcode === 'caldera_form_modal' ) {
-			$atts[ 'modal' ] = true;
+
+		if ( $shortcode === 'caldera_form_modal' || ( ! empty( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) ) {
+			return self::render_modal_form( $atts, $content );
 		}
 
-		if ( isset( $atts[ 'modal' ] ) && $atts[ 'modal' ] ) {
-			$form = Caldera_Forms_Forms::get_form( $atts[ 'id' ] );
-			if ( ! is_array( $form ) ) {
-				return;
-			}
+		$form = self::render_form( $atts );
 
-			if ( empty( $content ) ) {
-				$content = $form[ 'name' ];
-			}
-
-			$tag_atts = sprintf( 'data-form="%1s"', $form[ 'ID' ] );
-			if ( empty( $atts[ 'preview' ] ) ) {
-				$tag_atts .= sprintf( 'data-remodal-target="modal-%1s"', $form[ 'ID' ] );
-			}
-			if ( ! empty( $atts[ 'width' ] ) ) {
-				$tag_atts .= sprintf( ' data-width="%1s"', $atts[ 'width' ] );
-			}
-			if ( ! empty( $atts[ 'height' ] ) ) {
-				$tag_atts .= sprintf( ' data-height="%1s"', $atts[ 'height' ] );
-			}
-
-
-			$title = __( sprintf( 'Click to open the form %1s in a modal', $form[ 'name' ] ), 'caldera-forms' );
-			if ( ! empty( $atts[ 'type' ] ) && $atts[ 'type' ] == 'button' ) {
-				$form = sprintf( '<button class="caldera-forms-modal" %1s title="%2s">%3s</button>', $tag_atts, $title, $content );
-			} else {
-				$form = sprintf( '<a href="#" class="caldera-forms-modal" %1s title="%2s">%3s</a>', $tag_atts, $title, $content );
-			}
-
-			Caldera_Forms_Render_Assets::enqueue_script( 'dynamic' );
-		} else {
-			$form = self::render_form( $atts );
-		}
 
 		return $form;
 

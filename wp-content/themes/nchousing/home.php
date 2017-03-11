@@ -203,47 +203,11 @@ use Roots\Sage\Assets;
       </div>
 
       <div class="row">
-        <div class="col-md-4">
-          <ul class="hnews-items">
-            <?php
-            $date = get_the_time('n/j/Y');
-            $items = get_field('news_item');
+        <?php echo do_shortcode('[recent-housing-news number="12"]'); ?>
+      </div>
 
-            $i = 0;
-            $limit = 12;
-            $count = count($items);
-
-            // If count is less than limit, determine where to break the column. Otherwise, set column break at a third the limit
-            if ($count < $limit) {
-              $colbreak = ceil($count/3);
-            } else {
-              $colbreak = $limit/3;
-            }
-
-            while ($i < $limit && $i < $count) {
-              if ($i > 0 && $i % $colbreak == 0) {
-                echo '</ul></div><div class="col-md-4"><ul class="hnews-items">';
-              }
-              $item = $items[$i];
-              ?>
-
-              <li data-source="<?php echo $item['link']; ?>">
-                <a class="mega-link" href="<?php echo $item['link']; ?>" target="_blank"></a>
-                <h3><?php echo $item['title']; ?></h3>
-                <p class="meta"><?php echo $item['source_name']; ?> | <?php echo $item['original_date']; ?> <span class="icon-external-link"></span></p>
-              </li>
-
-              <?php
-              $i++;
-            } ?>
-
-            <?php
-            if ($count > $limit) {
-              echo '<li><a class="btn btn-skew btn-gold" href="' . get_the_permalink() . '">See all of the latest housing news &raquo;</a></li>';
-            }
-            ?>
-          </ul>
-        </div>
+      <div class="text-center">
+        <a class="btn btn-skew btn-gold" href="<?php echo esc_url(home_url('/housing-news')); ?>">See all of the latest housing news &raquo;</a>
       </div>
     </div>
   <?php endwhile; endif; wp_reset_query(); ?>

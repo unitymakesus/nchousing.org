@@ -27,6 +27,7 @@ wp-content/wp-cache-config.php
 
 # pro plugins
 wp-content/plugins/advanced-custom-fields-pro/*
+wp-content/plugins/worker/*
 
 # wpengine specific
 .smushit-status

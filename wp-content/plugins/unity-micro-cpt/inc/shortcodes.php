@@ -157,7 +157,7 @@ function show_housing_news_archives( $atts, $content = null ) {
         $month_prev = null;
 
         // Get unique dates of each post in the database
-        $days = $wpdb->get_results("SELECT DISTINCT DAY( FROM_UNIXTIME(date) ) AS day, MONTH( FROM_UNIXTIME(date) ) AS month, YEAR( FROM_UNIXTIME(date) ) AS year, COUNT( id ) AS post_count FROM {$wpdb->prefix}housing_news GROUP BY day, month , year ORDER BY date DESC");
+        $days = $wpdb->get_results("SELECT DISTINCT DAY( CONVERT_TZ(FROM_UNIXTIME(date), '-06:00',  '+00:00') ) AS day, MONTH( CONVERT_TZ(FROM_UNIXTIME(date), '-06:00',  '+00:00') ) AS month, YEAR( CONVERT_TZ(FROM_UNIXTIME(date), '-06:00',  '+00:00') ) AS year, COUNT( id ) AS post_count FROM {$wpdb->prefix}housing_news GROUP BY day, month , year ORDER BY date DESC");
 
         // Determine which years and months need to be expanded on page load
         if (is_archive()) {

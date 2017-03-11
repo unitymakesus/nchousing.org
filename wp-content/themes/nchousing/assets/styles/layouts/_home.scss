@@ -516,7 +516,7 @@
 }
 
 .housing-news {
-  &:not(.hentry) {
+  &:not(.hentry):not(.page) {
     background: $gold-lighter;
     padding-bottom: 2em;
   }

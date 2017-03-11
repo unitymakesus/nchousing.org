@@ -75,7 +75,7 @@
     'page': {
       init: function() {
         // Show parent page menu for child pages that aren't in the menu
-        if ($('.sidebar .nav').children('li.active').length == 0) {
+        if ($('.sidebar .nav').children('li.active').length === 0) {
           $('.sidebar .nav').find('li.active').parents('li').addClass('active');
         }
       }

@@ -43,7 +43,7 @@ function show_recent_housing_news( $atts, $content = null ) {
           ?>
 
           <li data-source="<?php echo $item->url; ?>">
-            <a class="mega-link" href="<?php echo $item->url; ?>" target="_blank"></a>
+            <a class="mega-link" href="<?php echo $item->url; ?>" target="_blank" aria-label="Read article: <?php echo $item->title; ?>"></a>
             <h3><?php echo $item->title; ?></h3>
             <p class="meta"><?php echo $item->source; ?> | <?php echo date('m/d/Y', $item->date); ?> <span class="icon-external-link"></span></p>
           </li>
@@ -110,7 +110,7 @@ function show_housing_news_archives( $atts, $content = null ) {
 
             foreach ($items as $item) { ?>
               <li>
-                <a class="mega-link" href="<?php echo $item->url; ?>" target="_blank" onclick="ga('send', 'event', 'ednews', 'click');"></a>
+                <a class="mega-link" href="<?php echo $item->url; ?>" target="_blank" onclick="ga('send', 'event', 'ednews', 'click');" aria-label="Read article: <?php echo $item->title; ?>"></a>
                 <h3><?php echo $item->title; ?></h3>
                 <p class="meta"><?php echo $item->source; ?> | <?php echo date('m/d/Y', $item->date); ?> <span class="icon-external-link"></span></p>
               </li>

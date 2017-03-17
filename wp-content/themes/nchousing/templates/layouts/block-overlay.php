@@ -17,7 +17,7 @@ if (is_embed()) {
 <article <?php post_class('block-overlay photo-overlay'); ?>>
   <?php
   if (!empty($featured_image)) {
-    echo '<img class="post-thumbnail" src="' . $featured_image . '" />';
+    echo '<img class="post-thumbnail" src="' . $featured_image . '" alt="" />';
   }
 
   if ($video) {
@@ -30,5 +30,5 @@ if (is_embed()) {
     <?php get_template_part('templates/components/entry-meta'); ?>
   </header>
 
-  <a class="mega-link" href="<?php the_permalink(); ?>" <?php echo $target; ?>></a>
+  <a class="mega-link" href="<?php the_permalink(); ?>" <?php echo $target; ?> aria-label="Read full article: <?php the_title(); ?>"></a>
 </article>

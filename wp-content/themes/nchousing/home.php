@@ -6,7 +6,7 @@ use Roots\Sage\Assets;
 <section class="story">
   <div class="slanted-photos">
     <div class="mission">
-      <img class="background" src="<?php echo Assets\asset_path('images/banner.jpg'); ?>" />
+      <img class="background" src="<?php echo Assets\asset_path('images/banner.jpg'); ?>" alt="" />
       <div class="wrap-content">
         <div class="solid-notch">
           Ensuring that every North Carolinian has a home in which to live with <strong>dignity</strong> and <strong>opportunity</strong>.
@@ -19,8 +19,8 @@ use Roots\Sage\Assets;
       $spotlight = get_posts(['numberposts' => 1, 'category_name' => 'member-spotlight']);
       $background = get_the_post_thumbnail_url($spotlight[0]->ID, 'medium');
       ?>
-      <a href="<?php echo get_the_permalink($spotlight[0]->ID); ?>"></a>
-      <img class="background" src="<?php echo $background ?>" />
+      <a href="<?php echo get_the_permalink($spotlight[0]->ID); ?>" aria-label="Read full member spotlight"></a>
+      <img class="background" src="<?php echo $background ?>" alt="" />
       <div class="wrap-content">
         <h2>
           <span class="skew">Member Spotlight</span>
@@ -47,7 +47,7 @@ use Roots\Sage\Assets;
             <div class="hidden-xs col-sm-6 col-md-12">
               <div class="notch-img">
                 <div class="notch-inner">
-                  <img src="<?php echo Assets\asset_path('images/home-img-1.jpg'); ?>" />
+                  <img src="<?php echo Assets\asset_path('images/home-img-1.jpg'); ?>" alt="Group of people on front porch of house" />
                 </div>
               </div>
             </div>
@@ -83,7 +83,7 @@ use Roots\Sage\Assets;
             <div class="hidden-xs col-sm-6 col-md-12">
               <div class="notch-img">
                 <div class="notch-inner">
-                  <img src="<?php echo Assets\asset_path('images/home-img-2.jpg'); ?>" />
+                  <img src="<?php echo Assets\asset_path('images/home-img-2.jpg'); ?>" alt="Woman smiling in front of house" />
                 </div>
               </div>
             </div>
@@ -95,7 +95,7 @@ use Roots\Sage\Assets;
             <div class="hidden-xs col-sm-6 col-md-12">
               <div class="notch-img">
                 <div class="notch-inner">
-                  <img src="<?php echo Assets\asset_path('images/home-img-3.jpg'); ?>" />
+                  <img src="<?php echo Assets\asset_path('images/home-img-3.jpg'); ?>" alt="Woman filling out paperwork" />
                 </div>
               </div>
             </div>
@@ -160,23 +160,23 @@ use Roots\Sage\Assets;
     <div class="row">
       <div class="col-md-4 housing-matters callout-overlay">
         <div>
-          <img style="background-image: url(<?php echo Assets\asset_path('images/casa-salisbury-apts.jpg'); ?>);" class="background" />
+          <img style="background-image: url(<?php echo Assets\asset_path('images/casa-salisbury-apts.jpg'); ?>);" alt="" class="background" />
           <h3>Housing Matters <strong>Newsletter</strong></h3>
-          <a class="mega-link" href="/housing-matters-newsletter/"></a>
+          <a class="mega-link" href="/housing-matters-newsletter/" aria-label="Go to Housing Matters newsletters"></a>
         </div>
       </div>
       <div class="col-md-4 events callout-overlay">
         <div>
-          <img style="background-image: url(<?php echo Assets\asset_path('images/housing-conf.jpg'); ?>);" class="background" />
+          <img style="background-image: url(<?php echo Assets\asset_path('images/housing-conf.jpg'); ?>);" alt="" class="background" />
           <h3>Trainings <strong>And Events</strong></h3>
-          <a class="mega-link" href="/trainings-webinars/"></a>
+          <a class="mega-link" href="/trainings-webinars/" aria-label="See upcoming trainings and events"></a>
         </div>
       </div>
       <div class="col-md-4 jobs callout-overlay">
         <div>
-          <img style="background-image: url(<?php echo Assets\asset_path('images/community-lobby.jpg'); ?>);" class="background" />
+          <img style="background-image: url(<?php echo Assets\asset_path('images/community-lobby.jpg'); ?>);" alt="" class="background" />
           <h3>Job <strong>Opportunities</strong></h3>
-          <a class="mega-link" href="/job-listings/"></a>
+          <a class="mega-link" href="/job-listings/" aria-label="See current job opportunities"></a>
         </div>
       </div>
     </div>
@@ -222,10 +222,10 @@ use Roots\Sage\Assets;
 
         <div class="st-banner has-notch">
           <div class="house">
-            <img src="<?php echo Assets\asset_path('images/st-house.jpg'); ?>" />
+            <img src="<?php echo Assets\asset_path('images/st-house.jpg'); ?>" alt="" />
           </div>
-          <img class="st-logo" src="<?php echo Assets\asset_path('images/stronger-together-logo.png'); ?>" />
-          <a class="mega-link" href="/stronger-together/"></a>
+          <img class="st-logo" src="<?php echo Assets\asset_path('images/stronger-together-logo.png'); ?>" alt="Stronger Together. Smart Policy. Strategic Investments." />
+          <a class="mega-link" href="/stronger-together/" aria-label="Read more about the Stronger Together partnership between the NC Housing Coalition and the NC Community Development Initiative"></a>
         </div>
       </div>
     </div>

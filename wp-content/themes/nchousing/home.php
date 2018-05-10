@@ -122,6 +122,7 @@ use Roots\Sage\Assets;
   <img src="<?php echo Assets\asset_path('images/map-banner.png'); ?>" srcset="<?php echo Assets\asset_path('images/map-banner@2x.png'); ?> 2x" alt="Map of North Carolina counties" />
   <div class="wrap-content">
     <a class="btn-skew btn btn-gold btn-lg" href="/county-fact-sheets/"><span class="shape"></span>Explore NC's affordable housing needs by county <i class="glyphicon glyphicon-menu-right" aria-hidden="true"></i></a>
+    <a class="btn-skew btn btn-gold btn-lg" href="http://ncsu.maps.arcgis.com/apps/webappviewer/index.html?id=6dc0f5617a2e458c84236b901db3a244"><span class="shape"></span>Mapping Housing Insecurity in North Carolina <i class="glyphicon glyphicon-menu-right" aria-hidden="true"></i></a>
   </div>
 </section>
 

@@ -387,12 +387,7 @@
     left: 20px;
     right: 20px;
     transform: translate3d(0, -50%, 0);
-
-    @media (min-width: $screen-sm-min) {
-      left: 50%;
-      right: auto;
-      transform: translate3d(-50%, -50%, 0);
-    }
+    text-align: center;
   }
 
   .btn {
@@ -402,6 +397,7 @@
     font-weight: normal;
     white-space: normal;
     max-width: 100%;
+    margin: 0 20px;
 
     @media (min-width: $screen-sm-min) {
       padding-left: 40px;

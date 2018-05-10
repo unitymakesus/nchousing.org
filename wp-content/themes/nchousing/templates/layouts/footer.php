@@ -72,7 +72,7 @@ use Roots\Sage\Nav;
         <div class="col-md-3 text-right">
           <span class="uppercase">Follow Us</span>
           <a class="icon-facebook" href="http://www.facebook.com/NCHousing" target="_blank" rel="nofollow" aria-label="Facebook"></a>
-          <a class="icon-twitter" href="http://twitter.com/NCHousing" target="_blank" rel="nofollow" aria-label="Twitter"></a>
+          <a class="icon-twitter" href="http://twitter.com/NCHConline" target="_blank" rel="nofollow" aria-label="Twitter"></a>
         </div>
       </div>
     </div>

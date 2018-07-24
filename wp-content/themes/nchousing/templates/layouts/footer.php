@@ -11,7 +11,12 @@ use Roots\Sage\Nav;
         <div class="striped-line extra-bottom-margin">
           <h2>Many thanks to our sponsors</h2>
         </div>
-        <img src="<?php echo Assets\asset_path('images/bank-of-america-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/bank-of-america-logo@2x.png'); ?> 2x" alt="Bank of America" />
+
+        <?php if ( is_active_sidebar( 'footer_widget' ) ) : ?>
+        		<?php dynamic_sidebar( 'footer_widget' ); ?>
+        <?php endif; ?>
+
+        <!-- <img src="<?php echo Assets\asset_path('images/bank-of-america-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/bank-of-america-logo@2x.png'); ?> 2x" alt="Bank of America" />
         <img src="<?php echo Assets\asset_path('images/bbt-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/bbt-logo@2x.png'); ?> 2x" alt="BB&amp;T" />
         <img src="<?php echo Assets\asset_path('images/cahec-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/cahec-logo@2x.png'); ?> 2x" alt="CAHEC" />
         <img src="<?php echo Assets\asset_path('images/cohnreznick-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/cohnreznick-logo@2x.png'); ?> 2x" alt="CohnReznick" />
@@ -24,7 +29,7 @@ use Roots\Sage\Nav;
         <img src="<?php echo Assets\asset_path('images/rbc-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/rbc-logo@2x.png'); ?> 2x" alt="RBC Capital Markets" />
         <img src="<?php echo Assets\asset_path('images/suntrust-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/suntrust-logo@2x.png'); ?> 2x" alt="Suntrust" />
         <img src="<?php echo Assets\asset_path('images/td-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/td-logo@2x.png'); ?> 2x" alt="TD Bank" />
-        <img src="<?php echo Assets\asset_path('images/wells-fargo-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/wells-fargo-logo@2x.png'); ?> 2x" alt="Wells Fargo" />
+        <img src="<?php echo Assets\asset_path('images/wells-fargo-logo.png'); ?>" srcset="<?php echo Assets\asset_path('images/wells-fargo-logo@2x.png'); ?> 2x" alt="Wells Fargo" /> -->
       </div>
     </div>
   </div>
